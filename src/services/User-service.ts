@@ -10,11 +10,11 @@ export interface IUser {
     refreshToken?: string
 }
 
-export const registrUser = (user: IUser) => {
+function baseAuth(funcUrl : String, user : IUser) {
     return new Promise<IUser>((resolve, reject) => {
-        console.log("Registering user...")
+        console.log(funcUrl + " user...")
         console.log(user)
-        apiClient.post("/auth/register", user).then((response) => {
+        apiClient.post("/auth/" + funcUrl, user).then((response) => {
             console.log(response)
             resolve(response.data)
         }).catch((error) => {
@@ -22,6 +22,14 @@ export const registrUser = (user: IUser) => {
             reject(error)
         })
     })
+}
+
+export const registrUser = (user: IUser) => {
+    return baseAuth("register", user);
+}
+
+export const logInUser = (user: IUser) => {
+    return baseAuth("login", user);
 }
 
 export const googleSignin = (credentialResponse: CredentialResponse) => {
