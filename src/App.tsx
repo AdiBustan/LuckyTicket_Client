@@ -1,25 +1,26 @@
 import { useState } from 'react'
 import './App.css'
-import EventList from './components/EventList'
-import NavBar from './components/navbar/NavBar'
-import { Grid } from '@mui/material'
-import SignInSide from './components/signInPage/SignIn'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from './components/HomePage'
+import SignInPage from './components/signInPage/SignIn';
+import RegistrationPage from './components/signInPage/Registration';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("user_id") != null);
+
+  const handleFormSubmit = (data : any) => {
+    console.log('Submitted data:', data);
+    setIsLoggedIn(true);
+  };
 
   return (
-    <>
-      <SignInSide/>
-      {/* <Grid container spacing={12}>
-        <Grid item xs={2}>
-          <NavBar/>
-        </Grid>
-        <Grid item xs={10} marginTop={'120px'}>
-          <EventList/>
-        </Grid>
-      </Grid> */}
-    </>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={isLoggedIn ? <HomePage/> : <SignInPage onLoggin={handleFormSubmit}/>}>
+            <Route path="registration" element={<RegistrationPage onLoggin={handleFormSubmit}/>} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
   )
 }
 
