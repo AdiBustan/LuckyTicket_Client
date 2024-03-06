@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -14,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CredentialResponse, GoogleLogin} from '@react-oauth/google'
 import { googleSignin, IUser, logInUser } from '../../services/User-service';
+import { setAccessToken, setRefreshToken } from '../../services/token-service';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -25,12 +24,16 @@ const SignInPage = ({onLoggin} : any) => {
     const data = new FormData(event.currentTarget);
     const user: IUser = {
         'email': data.get('email') as string,
-        'password': data.get('password') as string,
-
+        'password': data.get('password') as string
     }
     const res = await logInUser(user)
     onLoggin(res);
-    console.log(res)
+
+    if (res.accessToken) {
+      setAccessToken(res.accessToken);
+      setRefreshToken(res.refreshToken);
+    }
+    console.log(user)
   };
 
   const onGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
@@ -102,10 +105,6 @@ const SignInPage = ({onLoggin} : any) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
               />
               <Button
                 type="submit"
