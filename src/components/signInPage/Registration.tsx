@@ -3,52 +3,34 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { CredentialResponse, GoogleLogin} from '@react-oauth/google'
-import { googleSignin, IUser, logInUser } from '../../services/User-service';
+import { IUser, registrUser } from '../../services/User-service';
 import { setAccessToken, setRefreshToken } from '../../services/token-service';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-const SignInPage = ({onLoggin} : any) => {
-
-  const handleLogginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+const RegistrationPage = ({onLoggin} : any) => {
+  const handleRegisterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const user: IUser = {
         'email': data.get('email') as string,
-        'password': data.get('password') as string
-    }
-    const res = await logInUser(user)
-    onLoggin(res);
+        'password': data.get('password') as string,
 
+    }
+    const res = await registrUser(user)
     if (res.accessToken) {
-      setAccessToken(res.accessToken);
-      setRefreshToken(res.refreshToken);
-    }
-    console.log(user)
-  };
-
-  const onGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
-    console.log(credentialResponse)
-    try {
-        const res = await googleSignin(credentialResponse)
-        console.log(res)
+        setAccessToken(res.accessToken);
+        setRefreshToken(res.refreshToken);
         onLoggin(res);
-    } catch (e) {
-        console.log(e)
-    }
-  };
-
-  const onGoogleLoginFailure = () => {
-    console.log("Google login failed")
+      }
+    console.log(res)
   };
 
   return (
@@ -83,9 +65,9 @@ const SignInPage = ({onLoggin} : any) => {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in
+              Register
             </Typography>
-            <Box component="form" noValidate onSubmit={handleLogginSubmit} sx={{ mt: 1 }}>
+            <Box component="form" noValidate onSubmit={handleRegisterSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -114,15 +96,7 @@ const SignInPage = ({onLoggin} : any) => {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item>
-                  <Link href="/registration" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
             </Box>
-            <GoogleLogin onSuccess={onGoogleLoginSuccess} onError={onGoogleLoginFailure}/>
           </Box>
         </Grid>
       </Grid>
@@ -130,4 +104,4 @@ const SignInPage = ({onLoggin} : any) => {
   );
 };
 
-export default SignInPage;
+export default RegistrationPage;
