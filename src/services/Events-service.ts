@@ -1,7 +1,7 @@
 import apiClient, { CanceledError } from "./Api-client"
 
 import { EventData } from "../components/event/Event"
-import { getRefreshToken, refreshAccessToken, setAccessToken } from "./token-service"
+//import { getRefreshToken, refreshAccessToken, setAccessToken } from "./token-service"
 
 export { CanceledError }
 const getAllEvents = () => {

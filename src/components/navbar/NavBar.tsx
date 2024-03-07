@@ -1,5 +1,5 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
+//import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 // import Divider from '@mui/material/Divider';
@@ -13,37 +13,36 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
-import { fontFamily } from '@mui/system';
 
 const drawerWidth = 230;
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window?: () => Window;
-}
+// interface Props {
+//   /**
+//    * Injected by the documentation to work in an iframe.
+//    * Remove this when copying and pasting into your project.
+//    */
+//   window?: () => Window;
+// }
 
-export default function NavBar(props: Props) {
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [isClosing, setIsClosing] = React.useState(false);
+export default function NavBar() {
+  // const { window } = props;
+  // const [mobileOpen, setMobileOpen] = React.useState(false);
+  // const [isClosing, setIsClosing] = React.useState(false);
 
-  const handleDrawerClose = () => {
-    setIsClosing(true);
-    setMobileOpen(false);
-  };
+  // const handleDrawerClose = () => {
+  //   setIsClosing(true);
+  //   setMobileOpen(false);
+  // };
 
-  const handleDrawerTransitionEnd = () => {
-    setIsClosing(false);
-  };
+  // const handleDrawerTransitionEnd = () => {
+  //   setIsClosing(false);
+  // };
 
-  const handleDrawerToggle = () => {
-    if (!isClosing) {
-      setMobileOpen(!mobileOpen);
-    }
-  };
+  // const handleDrawerToggle = () => {
+  //   if (!isClosing) {
+  //     setMobileOpen(!mobileOpen);
+  //   }
+  // };
 
   const drawer = (
     <div>
@@ -80,10 +79,7 @@ export default function NavBar(props: Props) {
       </List>
     </div>
   );
-
-  // Remove this const when copying and pasting into your project.
-  const container = window !== undefined ? () => window().document.body : undefined;
-
+  
   return (
     <Box sx={{ display: 'flex'}} >
       <CssBaseline />
