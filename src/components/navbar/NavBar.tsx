@@ -13,36 +13,14 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
+import { useNavigate } from "react-router";
+
 
 const drawerWidth = 230;
 
-// interface Props {
-//   /**
-//    * Injected by the documentation to work in an iframe.
-//    * Remove this when copying and pasting into your project.
-//    */
-//   window?: () => Window;
-// }
-
 export default function NavBar() {
-  // const { window } = props;
-  // const [mobileOpen, setMobileOpen] = React.useState(false);
-  // const [isClosing, setIsClosing] = React.useState(false);
+  const navigate = useNavigate();
 
-  // const handleDrawerClose = () => {
-  //   setIsClosing(true);
-  //   setMobileOpen(false);
-  // };
-
-  // const handleDrawerTransitionEnd = () => {
-  //   setIsClosing(false);
-  // };
-
-  // const handleDrawerToggle = () => {
-  //   if (!isClosing) {
-  //     setMobileOpen(!mobileOpen);
-  //   }
-  // };
 
   const drawer = (
     <div>
@@ -52,7 +30,7 @@ export default function NavBar() {
       </h3>
       <Toolbar/>
       <List >
-        <ListItem key="All Events" disablePadding>
+        <ListItem key="All Events" disablePadding onClick={() => navigate('/')}>
           <ListItemButton>
             <ListItemIcon style={{color: '#FFFFFF'}}>
               <EventNoteIcon />
@@ -60,7 +38,7 @@ export default function NavBar() {
             <ListItemText primary={"All Events"} style={{color: '#FFFFFF'}} />
           </ListItemButton>
         </ListItem>
-        <ListItem key="Upload New Event" disablePadding>
+        <ListItem key="Upload New Event" disablePadding onClick={() => navigate('uploadEvent')}>
           <ListItemButton>
             <ListItemIcon style={{color: '#FFFFFF'}}>
               <UploadIcon />
@@ -68,7 +46,7 @@ export default function NavBar() {
             <ListItemText primary={"Upload New Event"} style={{color: '#FFFFFF'}} />
           </ListItemButton>
         </ListItem>
-        <ListItem key="Profile" disablePadding>
+        <ListItem key="Profile" disablePadding onClick={() => navigate('profile')}>
           <ListItemButton>
             <ListItemIcon style={{color: '#FFFFFF'}}>
               <PersonIcon />
