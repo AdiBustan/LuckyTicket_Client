@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material"
 import NavBar from "./navbar/NavBar"
 import EventList from "./EventList"
+import UploadEvent from "./UploadEvent"
 
 function HomePage() {
     return (
@@ -10,7 +11,7 @@ function HomePage() {
               <NavBar/>
             </Grid>
             <Grid item xs={10} marginTop={'120px'}>
-              <EventList/>
+              <UploadEvent/>
             </Grid>
           </Grid>
         </>

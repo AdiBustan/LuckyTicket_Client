@@ -21,6 +21,7 @@ function App() {
             <Route path="registration" element={<RegistrationPage onLoggin={handleFormSubmit}/>} />
           </Route>
         </Routes>
+        {/* <HomePage/> */}
       </BrowserRouter>
   )
 }
