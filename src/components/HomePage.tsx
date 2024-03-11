@@ -9,7 +9,7 @@ function HomePage() {
             <Grid item xs={2}>
               <NavBar/>
             </Grid>
-            <Grid item xs={10} marginTop={'120px'}>
+            <Grid item xs={10} marginTop={'20px'}>
               <EventList/>
             </Grid>
           </Grid>
