@@ -1,0 +1,13 @@
+  .comment-list {
+    /* Style the comment list here */
+    position: absolute; /* Position the list relative to the icon */
+    top: 100%; /* Position the list below the icon */
+    left: 0; /* Align the list to the left of the icon */
+    list-style: none; /* Remove default bullet points */
+    padding: 0; /* Remove default padding */
+    background-color: #fff; /* Set background color */
+    border: 1px solid #ddd; /* Add a border */
+    /* Add other styles as needed */
+  }
+  
+  
