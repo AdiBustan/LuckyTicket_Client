@@ -17,3 +17,11 @@
 .eventCard:hover {
 	box-shadow: 1px 1px 10px 0px rgba(37, 3, 3, 0.377);
 }
+
+br {
+	margin-bottom: 10em;
+}
+
+.comments-icon {
+	margin-left: 10px;
+}

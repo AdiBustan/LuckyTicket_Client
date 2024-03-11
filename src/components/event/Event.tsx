@@ -1,7 +1,10 @@
-import { Image } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import "./Event.css"
+import { Grid } from '@mui/material';
+import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import CommentList from '../comments/CommentList';
+import { useState } from 'react';
+import EventDetails from './EventDetails';
 
 export interface EventData {
     date: string;
@@ -10,23 +13,38 @@ export interface EventData {
     city: string;
     artist: string;
     image: string;
-    _id: string
+    _id: string;
+    comments: string[];
 }
 
 interface EventProps {
     event: EventData
 }
 
+
 function Event({ event }: EventProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
+
+
     return (
         <Card style={{ width: '14rem' }} className='eventCard'>
         <Card.Img variant="top" src='Tuna.jpg' height={'200erm'} />
         <Card.Body>
-          <Card.Title>{event.artist}</Card.Title>
-          <Card.Text>
-            Location: {event.location} <br></br>
-            Time: {event.hour} <br></br>
-            Date: {event.date}
+          <Grid container spacing={3}>
+            <Grid item xs={8}>
+              <h5>{event.artist}</h5>
+            </Grid>
+            <Grid item xs={4} style={{fontSize: 14}}>
+              {event.comments.length}
+              <ChatBubbleOutlineOutlinedIcon style={{width: 30}} sx={{ stroke: "#ffffff", strokeWidth: 1 }} 
+                onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}/>
+            </Grid>
+          </Grid>
+          <Card.Text style={{lineHeight: 1.7}}>
+            {isHovered ? <CommentList comments={event.comments}/> : <EventDetails event={event}/>}
           </Card.Text>
         </Card.Body>
       </Card>
@@ -34,3 +52,5 @@ function Event({ event }: EventProps) {
 }
 
 export default Event
+
+
