@@ -8,13 +8,12 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import EventsService, { CanceledError } from "../services/Events-service";
-import { EventData } from './event/Event'
+import EventsService, { CanceledError, IEvent } from "../services/Events-service";
 import CommentList from "./comments/CommentList";
 
 function EventPage() {
     const param = useParams();
-    const [event, setEvent] = useState<EventData>([])
+    const [event, setEvent] = useState<IEvent>()
     const [error, setError] = useState()
     const [isHidden, setIsHidden] = useState(false)
     const [message, setMessage] = useState('');
@@ -45,8 +44,8 @@ function EventPage() {
     }, [])
 
 
-    function addComment(event: EventData) {
-        const newEvent :EventData = event;
+    function addComment(event: IEvent) {
+        const newEvent :IEvent = event;
         const newComment = message as string;
     
         newEvent.comments.push(newComment);
@@ -80,7 +79,7 @@ function EventPage() {
                     <QueryBuilderOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.hour}
                 </Grid>
                 <Grid item xs={3} style={{fontSize: 20}}>
-                    <LocalPhoneOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> 054-2685794
+                    <LocalPhoneOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.phone}
                 </Grid>
                 <Grid item xs={7} style={{fontSize: 20}}>
                     <LocationOnOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.location}

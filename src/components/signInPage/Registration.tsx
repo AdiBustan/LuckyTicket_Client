@@ -22,6 +22,7 @@ const RegistrationPage = ({onLoggin} : any) => {
     const user: IUser = {
         'email': data.get('email') as string,
         'password': data.get('password') as string,
+        'phone': data.get('phone') as string
 
     }
     const res = await registrUser(user)
@@ -87,6 +88,15 @@ const RegistrationPage = ({onLoggin} : any) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="phone"
+                label="phone"
+                type="phone"
+                id="phone"
               />
               <Button
                 type="submit"

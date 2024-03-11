@@ -42,7 +42,8 @@ function UploadEvent() {
       'location': data.get('location') as string,
       'city': data.get('city') as string,
       'artist': data.get('artist') as string,
-      'image': selectedImage as unknown as string
+      'image': selectedImage as unknown as string,
+      'comments': [] as string[]
     }
     uploadEvent(eventToUpload)
 

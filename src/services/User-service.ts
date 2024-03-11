@@ -4,6 +4,7 @@ import apiClient from "./Api-client"
 export interface IUser {
     email: string,
     password?: string,
+    phone: string,
     imgUrl?: string,
     _id?: string,
     accessToken?: string,
