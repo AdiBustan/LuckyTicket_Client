@@ -8,12 +8,13 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import EventsService, { CanceledError, IEvent } from "../services/Events-service";
+import EventsService, { CanceledError } from "../services/Events-service";
+import EventData from './event/Event'
 import CommentList from "./comments/CommentList";
 
 function EventPage() {
     const param = useParams();
-    const [event, setEvent] = useState<IEvent>()
+    const [event, setEvent] = useState<EventData>([])
     const [error, setError] = useState()
     const [isHidden, setIsHidden] = useState(false)
     const [message, setMessage] = useState('');
