@@ -44,8 +44,8 @@ function EventPage() {
     }, [])
 
 
-    function addComment(event: IEvent) {
-        const newEvent :IEvent = event;
+    function addComment(event: EventData) {
+        const newEvent :EventData = event;
         const newComment = message as string;
     
         newEvent.comments.push(newComment);
