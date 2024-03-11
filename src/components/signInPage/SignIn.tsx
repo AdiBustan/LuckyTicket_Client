@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CredentialResponse, GoogleLogin} from '@react-oauth/google'
 import { googleSignin, IUser, logInUser } from '../../services/User-service';
 import { setAccessToken, setRefreshToken } from '../../services/token-service';
+import { color } from '@mui/system';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -24,7 +25,8 @@ const SignInPage = ({onLoggin} : any) => {
     const data = new FormData(event.currentTarget);
     const user: IUser = {
         'email': data.get('email') as string,
-        'password': data.get('password') as string
+        'password': data.get('password') as string,
+        'phone': "0544444"
     }
     const res = await logInUser(user)
     onLoggin(res);
@@ -54,17 +56,13 @@ const SignInPage = ({onLoggin} : any) => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
-        <CssBaseline />
         <Grid
           item
           xs={false}
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+            backgroundImage: 'url(/images/event.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -79,41 +77,46 @@ const SignInPage = ({onLoggin} : any) => {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
+          <img src='/images/clover_icon.png' width={'130px'} style={{display:'flex', margin:'auto'}}/>
+            <Typography component="h1" variant="h3"  style={{fontFamily: 'cursive', color:'#0D0125'}} >
+              LUCKY TICKET
             </Typography>
             <Box component="form" noValidate onSubmit={handleLogginSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
+              
+              <Grid marginTop={'100px'}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+              </Grid>
+              
+              <Grid textAlign='center'>
+                <Button
+                  type="submit"
+                  style={{ backgroundColor: '#0D0125', fontFamily: 'cursive' }}
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+              </Grid>
+              
               <Grid container>
                 <Grid item>
                   <Link href="/registration" variant="body2">
@@ -121,8 +124,11 @@ const SignInPage = ({onLoggin} : any) => {
                   </Link>
                 </Grid>
               </Grid>
+              
+              <Grid width={'200px'} alignItems={'center'}>
+                <GoogleLogin onSuccess={onGoogleLoginSuccess} onError={onGoogleLoginFailure}/>
+              </Grid>
             </Box>
-            <GoogleLogin onSuccess={onGoogleLoginSuccess} onError={onGoogleLoginFailure}/>
           </Box>
         </Grid>
       </Grid>

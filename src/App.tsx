@@ -5,10 +5,10 @@ import HomePage from './components/HomePage'
 import SignInPage from './components/signInPage/SignIn';
 import RegistrationPage from './components/signInPage/Registration';
 import { useState } from 'react';
-import EventPage from './components/EventPage';
 import NavBar from './components/navbar/NavBar';
 import { Grid } from '@mui/material';
 import EventList from './components/EventList';
+import EventPage from './components/EventPage';
 import UploadEvent from './components/UploadEvent';
 
 function App() {

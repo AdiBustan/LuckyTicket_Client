@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 function EventList() {
     const [events, setEvents] = useState<EventData[]>([])
     const [error, setError] = useState()
+    
     useEffect(() => {
         const { req, abort } = EventService.getAllEvents()
         req.then((res) => {

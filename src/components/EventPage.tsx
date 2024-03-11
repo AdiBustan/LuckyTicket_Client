@@ -9,7 +9,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import EventsService, { CanceledError } from "../services/Events-service";
-import { EventData } from './event/Event'
+import EventData from './event/Event'
 import CommentList from "./comments/CommentList";
 
 function EventPage() {
@@ -80,7 +80,7 @@ function EventPage() {
                     <QueryBuilderOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.hour}
                 </Grid>
                 <Grid item xs={3} style={{fontSize: 20}}>
-                    <LocalPhoneOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> 054-2685794
+                    <LocalPhoneOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.phone}
                 </Grid>
                 <Grid item xs={7} style={{fontSize: 20}}>
                     <LocationOnOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.location}

@@ -5,20 +5,10 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import CommentList from '../comments/CommentList';
 import { useState } from 'react';
 import EventDetails from './EventDetails';
-
-export interface EventData {
-    date: string;
-    hour: string;
-    location: string;
-    city: string;
-    artist: string;
-    image: string;
-    _id: string;
-    comments: string[];
-}
+import { IEvent } from '../../services/Events-service';
 
 interface EventProps {
-    event: EventData
+    event: IEvent
 }
 
 
