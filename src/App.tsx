@@ -20,7 +20,33 @@ function App() {
   };
 
   return (
-      <BrowserRouter>
+      // <BrowserRouter>
+      //   {isLoggedIn ? 
+        
+      //   (<Grid container spacing={12}>
+      //    <Grid item xs={2}>
+      //       <NavBar/>
+      //     </Grid>
+      //     <Grid item xs={10} marginTop={'20px'}>
+      //       <Routes>
+      //         <Route path='/' element= {<EventList/>}/>
+      //         <Route path='uploadEvent' element={<UploadEvent/>}/>
+      //         <Route path="event/:id" element={<EventPage/> }/>
+      //         <Route path="registration" element={<RegistrationPage onLoggin={handleFormSubmit}/>} />
+      //       </Routes>
+      //     </Grid>
+      //   </Grid>) 
+      //   :
+      //   (
+      //      <Grid >
+      //       <SignInPage onLoggin={handleFormSubmit}/>
+      //      </Grid>
+      //    )}
+      // </BrowserRouter>
+
+
+
+<BrowserRouter>
         <Grid container spacing={12}>
         {isLoggedIn && <Grid item xs={2}>
             <NavBar/>

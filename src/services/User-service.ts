@@ -4,14 +4,14 @@ import apiClient from "./Api-client"
 export interface IUser {
     email: string,
     password?: string,
-    phone: string,
+    phone?: string,
     imgUrl?: string,
     _id?: string,
     accessToken?: string,
     refreshToken?: string
 }
 
-function baseAuth(funcUrl : String, user : IUser) {
+function baseAuth(funcUrl : string, user : IUser) {
     return new Promise<IUser>((resolve, reject) => {
         console.log(funcUrl + " user...")
         console.log(user)
