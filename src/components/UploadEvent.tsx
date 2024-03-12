@@ -11,16 +11,48 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { IEvent, uploadEvent } from '../services/Events-service';
+import {useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Autocomplete } from '@mui/material';
 
 
 
 function UploadEvent() {
 
-  const [selectedImage, setSelectedImage] = React.useState(null);
+  const [options, setOptions] = React.useState([{ label: "Tel Aviv, Israel" }])
+  const [selectedImage, setSelectedImage] = React.useState("");
+  const navigate = useNavigate();
+
+
+  const fetchLocations = async () => {
+    try {
+      await axios
+        .get("https://countriesnow.space/api/v0.1/countries")
+        .then((res) => {
+          // console.log(res.data.data);
+          const all: { label: string }[] = [];
+          res.data.data.map((location: any) => {
+            if (location.country == "Israel") {
+              location.cities.map((city: any) => {
+                const temp = { label: city };
+                all.push(temp);
+              })
+            }
+          });
+          setOptions(all);
+        }).catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log("Error fetching locations: " + error);
+    }
+  };
+
+  fetchLocations();
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    
+    console.log(options)
     if (file) {
       // Display the selected image
       const reader = new FileReader();
@@ -34,6 +66,7 @@ function UploadEvent() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const data = new FormData(event.currentTarget);
     console.log(data)
     const eventToUpload: IEvent = {
@@ -42,21 +75,24 @@ function UploadEvent() {
       'location': data.get('location') as string,
       'city': data.get('city') as string,
       'artist': data.get('artist') as string,
-      'image': selectedImage as unknown as string,
+      'image': "selectedImage as unknown as string",
       'comments': [] as string[]
     }
-    uploadEvent(eventToUpload)
 
+    localStorage.setItem(eventToUpload.artist, selectedImage)
+    uploadEvent(eventToUpload)    
+
+    navigate('/')
   };
 
 
   return (
     <Container component="main">
-      <Typography fontFamily={'cursive'} variant="h3">
+      <Typography fontFamily={'cursive'} variant="h3"  marginTop={"50px"}>
         Upload New Event
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-        <Grid container marginTop={'50px'} marginLeft={'20px'} >
+        <Grid container marginTop={'70px'} marginLeft={'20px'} >
           
           <Grid container spacing={2} item xs={12} sm direction="column" >
             <Grid container spacing={2}>
@@ -78,7 +114,7 @@ function UploadEvent() {
 
               <Grid item xs={12} sm={5}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <TimePicker name="time" label="time" format="hh:mm" />
+                  <TimePicker name="time" label="time" format="hh:mm" ampm={false} />
                 </LocalizationProvider>
               </Grid>
 
@@ -87,13 +123,18 @@ function UploadEvent() {
               </Grid>
 
               <Grid item xs={12} sm={11}>
-                <TextField fullWidth name="city" label="City" id="city" />
-              </Grid>
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={options}
+                  renderInput={(params) => <TextField {...params} id="city" name="city" label="city" />}
+                />
+               </Grid>
             </Grid>
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <Box textAlign="left" marginTop={'25px'}>
+            <Box textAlign="left">
               
               {selectedImage && (
                 <Box>
@@ -101,7 +142,7 @@ function UploadEvent() {
                 </Box>
               )}
 
-              <Box marginTop={3}>
+              <Box>
                 <input
                   accept="image/*"
                   style={{ display: 'none'}}
@@ -115,7 +156,7 @@ function UploadEvent() {
                     variant="contained"
                     component="span"
                     startIcon={<CloudUploadIcon />}
-                    style={{ backgroundColor: '#0D0125', fontFamily: 'cursive', height:'25px',fontSize:'10px', width: '200px' }}
+                    style={{ marginTop: '10px', backgroundColor: '#0D0125', fontFamily: 'cursive', height:'25px',fontSize:'10px', width: '200px' }}
                   >
                     Upload Image
                   </Button>
@@ -127,7 +168,7 @@ function UploadEvent() {
 
         </Grid>
 
-        <Grid marginTop={'50px'} marginLeft={'20px'}>
+        <Grid marginTop={'50px'} textAlign={"left"}>
           <Button
               type="submit"
               variant="contained"
