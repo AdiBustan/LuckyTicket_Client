@@ -13,12 +13,17 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { IUser, registrUser } from '../../services/User-service';
 import { setAccessToken, setRefreshToken } from '../../services/token-service';
 import { height } from '@mui/system';
+import AlertDialog from '../AlertDialog';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 const RegistrationPage = ({onLoggin} : any) => {
   const [selectedImage, setSelectedImage] = React.useState("/images/profile_avatar.jpg");
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => { setOpen(true) };
+  const handleClose = () => { setOpen(false) };
 
   const handleRegisterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,17 +35,22 @@ const RegistrationPage = ({onLoggin} : any) => {
         'phone': data.get('phone') as string
 
     }
-    const res = await registrUser(user)
-    localStorage.setItem(user.email, selectedImage)
 
-    if (res.accessToken) {
-        setAccessToken(res.accessToken);
-        setRefreshToken(res.refreshToken);
-        onLoggin(res);
+    if (!user.username || !user.email || !user.password ||
+        !user.phone || !selectedImage) {
+      handleOpen();
+    } else {
+      const res = await registrUser(user)
+      localStorage.setItem(user.email, selectedImage)
+
+      if (res.accessToken) {
+          setAccessToken(res.accessToken);
+          setRefreshToken(res.refreshToken);
+          onLoggin(res);
       }
+    }
+
     
-    
-    console.log(res)
   };
 
   const handleImageChange = (event) => {
@@ -151,6 +161,10 @@ const RegistrationPage = ({onLoggin} : any) => {
                 >
                   Sign Up
                 </Button>
+                <AlertDialog
+                  open={open}
+                  onClose={handleClose}
+                />
               </Grid>
               
             </Box>

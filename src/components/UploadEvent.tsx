@@ -14,6 +14,7 @@ import { IEvent, uploadEvent } from '../services/Events-service';
 import {useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Autocomplete } from '@mui/material';
+import AlertDialog from './AlertDialog';
 
 
 
@@ -22,7 +23,10 @@ function UploadEvent() {
   const [options, setOptions] = React.useState([{ label: "Tel Aviv, Israel" }])
   const [selectedImage, setSelectedImage] = React.useState("");
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(false);
 
+  const handleOpen = () => { setOpen(true) };
+  const handleClose = () => { setOpen(false) };
 
   const fetchLocations = async () => {
     try {
@@ -78,10 +82,17 @@ function UploadEvent() {
       'comments': [] as string[]
     }
 
-    localStorage.setItem(eventToUpload.artist, selectedImage)
-    uploadEvent(eventToUpload)    
 
-    navigate('/')
+    if (!eventToUpload.date || !eventToUpload.hour || !eventToUpload.location ||
+          !eventToUpload.city || !eventToUpload.artist || !selectedImage) {
+      handleOpen();
+      
+    } else {
+      localStorage.setItem(eventToUpload.artist, selectedImage)
+      uploadEvent(eventToUpload)    
+    
+      navigate('/')
+    }
   };
 
 
@@ -175,7 +186,11 @@ function UploadEvent() {
               style={{ backgroundColor: '#0D0125', fontFamily: 'cursive' }}
               >
                 Upload Event
-              </Button>
+          </Button>
+          <AlertDialog
+            open={open}
+            onClose={handleClose}
+          />
         </Grid>
       
       </Box>
