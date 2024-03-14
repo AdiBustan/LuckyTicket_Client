@@ -55,7 +55,7 @@ const SignInPage = ({onLoggin} : any) => {
 
   return (
     <div>
-      <Grid container component="main">
+      <Grid container component="main" sx={{height: '100vh'}}>
         <Grid
           item
           xs={false}
@@ -106,7 +106,7 @@ const SignInPage = ({onLoggin} : any) => {
                 />
               </Grid>
               
-              <Grid textAlign='center'>
+              <Grid textAlign='right'>
                 <Button
                   type="submit"
                   style={{ backgroundColor: '#0D0125', fontFamily: 'cursive' }}
@@ -117,12 +117,15 @@ const SignInPage = ({onLoggin} : any) => {
                 </Button>
               </Grid>
               
-              <Grid width={'200px'} style={{display:'flex', margin:'auto'}}>
-                <GoogleLogin onSuccess={onGoogleLoginSuccess} onError={onGoogleLoginFailure}/>
+              <Grid container marginTop={'40px'}>
+                <Grid width={'200px'} style={{display:'flex', margin:'auto'}}>
+                  <GoogleLogin onSuccess={onGoogleLoginSuccess} onError={onGoogleLoginFailure}/>
+                </Grid>
               </Grid>
+              
 
-              <Grid container>
-                <Grid item style={{marginTop:'50px', display:'flex', margin:'auto'}}>
+              <Grid container marginTop={'20px'}>
+                <Grid item style={{display:'flex', margin:'auto'}}>
                   <Link href="/registration" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>

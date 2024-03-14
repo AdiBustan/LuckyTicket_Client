@@ -2,6 +2,7 @@ import { CredentialResponse } from "@react-oauth/google"
 import apiClient from "./Api-client"
 
 export interface IUser {
+    username?: string,
     email: string,
     password?: string,
     phone?: string,
