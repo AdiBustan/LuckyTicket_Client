@@ -10,6 +10,7 @@ import { Grid } from '@mui/material';
 import EventList from './components/EventList';
 import EventPage from './components/EventPage';
 import UploadEvent from './components/UploadEvent';
+import ProfilePage from './components/ProfilePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("user_id") != null);
@@ -29,6 +30,7 @@ function App() {
             <Routes>
               <Route path='/' element={isLoggedIn ? <EventList/> : <SignInPage onLoggin={handleFormSubmit}/>}/>
               <Route path='uploadEvent' element={isLoggedIn ? <UploadEvent/> : <SignInPage onLoggin={handleFormSubmit}/>}/>
+              <Route path='profile' element={isLoggedIn ? <ProfilePage/> : <SignInPage onLoggin={handleFormSubmit}/>}/>
               <Route path="event/:id" element={isLoggedIn ? <EventPage/> : <SignInPage onLoggin={handleFormSubmit}/>}/>
               <Route path="registration" element={<RegistrationPage onLoggin={handleFormSubmit}/>} />
             </Routes>

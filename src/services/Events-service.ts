@@ -11,7 +11,7 @@ export interface IEvent {
     image: string;
     phone: string;
     comments: string[];
-    _id?: string;
+    _id: string;
 }
 
 export { CanceledError }

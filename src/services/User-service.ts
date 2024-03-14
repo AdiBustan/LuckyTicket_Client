@@ -5,6 +5,7 @@ export interface IUser {
     email: string,
     password?: string,
     phone: string,
+    name: string,
     imgUrl?: string,
     _id?: string,
     accessToken?: string,
@@ -44,4 +45,10 @@ export const googleSignin = (credentialResponse: CredentialResponse) => {
             reject(error)
         })
     })
+}
+
+export const getUserById = (userId : string) => {
+    const abortController = new AbortController()
+    const req = apiClient.get<IUser>('user/' + userId, { signal: abortController.signal })
+    return { req, abort: () => abortController.abort() }
 }

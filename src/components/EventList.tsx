@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import Event, { EventData } from './event/Event'
-import EventService, { CanceledError } from "../services/Events-service"
+import Event from './event/Event'
+import EventService, { CanceledError, IEvent } from "../services/Events-service"
 import { Link } from 'react-router-dom'
 
 function EventList() {
-    const [events, setEvents] = useState<EventData[]>([])
+    const [events, setEvents] = useState<IEvent[]>([])
     const [error, setError] = useState()
     
     useEffect(() => {
