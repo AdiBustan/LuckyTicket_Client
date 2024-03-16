@@ -42,6 +42,7 @@ function EventPage() {
             console.log(err)
             if (err instanceof CanceledError) return
             setError(err.message)
+            console.log(error)
         })
         return () => {
             abort()
@@ -77,19 +78,27 @@ function EventPage() {
                 <Grid item xs={12} marginTop={'40px'}>
                     <h1>{event.artist}</h1>
                 </Grid>
-                <Grid item xs={3} style={{fontSize: 20}}>
-                    <CalendarMonthOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/>{event.date}
+                <Grid item xs={3} >
+                    <img elevation={3} width={'200px'} src={localStorage.getItem(event.artist)} />
                 </Grid>
-                <Grid item xs={7} style={{fontSize: 20}}>
-                    <QueryBuilderOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.hour}
+                <Grid marginTop={'30px'} container item xs={8}>
+                    <Grid item xs={4} style={{fontSize: 20}}>
+                        <CalendarMonthOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.date}
+                    </Grid>
+                    <Grid item xs={7} style={{fontSize: 20}}>
+                        <QueryBuilderOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.hour}
+                    </Grid>
+                    <Grid item xs={4} style={{fontSize: 20}}>
+                        <LocalPhoneOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.phone}
+                    </Grid>
+                    <Grid item xs={7} style={{fontSize: 20}}>
+                        <LocationOnOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.location}, {event.city}
+                    </Grid>
                 </Grid>
-                <Grid item xs={3} style={{fontSize: 20}}>
-                    <LocalPhoneOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.phone}
-                </Grid>
-                <Grid item xs={7} style={{fontSize: 20}}>
-                    <LocationOnOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.location}
-                </Grid>
-                <Grid item xs={3} marginTop={'10px'}>
+                
+                
+                
+                <Grid item xs={3} marginTop={'70px'}>
                     <h2>Comments
                         <IconButton onClick={onAddComment}>
                             <AddCircleOutlineOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 0.8, fontSize: 40 }}/>
