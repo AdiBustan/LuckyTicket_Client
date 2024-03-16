@@ -1,28 +1,22 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { IUser, registrUser } from '../../services/User-service';
 import { setAccessToken, setRefreshToken } from '../../services/token-service';
-import { height } from '@mui/system';
 import AlertDialog from '../AlertDialog';
-
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+import {useNavigate } from 'react-router-dom';
 
 const RegistrationPage = ({onLoggin} : any) => {
   const [selectedImage, setSelectedImage] = React.useState("/images/profile_avatar.jpg");
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
 
-  const handleOpen = () => { setOpen(true) };
+  const handleOpenDialog = () => { setOpen(true) };
   const handleClose = () => { setOpen(false) };
 
   const handleRegisterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,16 +32,18 @@ const RegistrationPage = ({onLoggin} : any) => {
 
     if (!user.username || !user.email || !user.password ||
         !user.phone || !selectedImage) {
-      handleOpen();
+      handleOpenDialog();
     } else {
       const res = await registrUser(user)
       localStorage.setItem(user.email, selectedImage)
+      onLoggin(res);
 
       if (res.accessToken) {
           setAccessToken(res.accessToken);
           setRefreshToken(res.refreshToken);
-          onLoggin(res);
       }
+
+      navigate('/')
     }
 
     
@@ -122,7 +118,15 @@ const RegistrationPage = ({onLoggin} : any) => {
                 name="username"
                 autoFocus
               />
-              
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="phone"
+                label="Phone Number"
+                type="phone"
+                id="phone"
+              />
               <TextField
                 margin="normal"
                 required
@@ -142,15 +146,6 @@ const RegistrationPage = ({onLoggin} : any) => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="phone"
-                label="phone"
-                type="phone"
-                id="phone"
               />
               <Grid textAlign={'right'}>
                 <Button

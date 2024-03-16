@@ -25,7 +25,7 @@ function UploadEvent() {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => { setOpen(true) };
+  const handleOpenDialog = () => { setOpen(true) };
   const handleClose = () => { setOpen(false) };
 
   const fetchLocations = async () => {
@@ -85,7 +85,7 @@ function UploadEvent() {
 
     if (!eventToUpload.date || !eventToUpload.hour || !eventToUpload.location ||
           !eventToUpload.city || !eventToUpload.artist || !selectedImage) {
-      handleOpen();
+      handleOpenDialog();
       
     } else {
       localStorage.setItem(eventToUpload.artist, selectedImage)
