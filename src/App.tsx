@@ -1,7 +1,6 @@
 //import { useState } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomePage from './components/HomePage'
 import SignInPage from './components/signInPage/SignIn';
 import RegistrationPage from './components/signInPage/Registration';
 import { useState } from 'react';
