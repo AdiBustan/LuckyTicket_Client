@@ -32,7 +32,7 @@ const SignInPage = ({onLoggin} : any) => {
     onLoggin(res);
 
     if (res.accessToken) {
-      setAccessToken(res.accessToken);
+      setAccessToken(res.accessToken, user.email);
       setRefreshToken(res.refreshToken);
     }
     console.log(user)

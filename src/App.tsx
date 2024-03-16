@@ -10,15 +10,22 @@ import { Grid } from '@mui/material';
 import EventList from './components/EventList';
 import EventPage from './components/EventPage';
 import UploadEvent from './components/UploadEvent';
-import ProfilePage from './components/ProfilePage';
+import ProfilePage from './components/profilePage/ProfilePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("user_id") != null);
 
   const handleFormSubmit = (data : any) => {
     console.log('Submitted data:', data);
+    localStorage.setItem("user_id", data.userId);
     setIsLoggedIn(true);
   };
+
+  const handleLogout = () => {
+    console.log('User Logout');
+    localStorage.setItem("user_id", '');
+    setIsLoggedIn(false);
+  }
 
   return (
 
@@ -55,6 +62,14 @@ function App() {
               path='event/:id'
               element={
                 isLoggedIn ? <EventPage /> : <SignInPage onLoggin={handleFormSubmit} />
+              }
+            />
+
+            {/* Profile page route */}
+            <Route
+              path='profile'
+              element={
+                isLoggedIn ? <ProfilePage onLogout={handleLogout} /> : <SignInPage onLoggin={handleFormSubmit} />
               }
             />
 

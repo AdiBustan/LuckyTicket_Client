@@ -11,12 +11,19 @@ export interface IEvent {
     phone?: string;
     comments: string[];
     _id: string;
+    ownerId: string;
 }
 
 export { CanceledError }
 const getAllEvents = () => {
     const abortController = new AbortController()
     const req = apiClient.get<IEvent[]>('event', { signal: abortController.signal })
+    return { req, abort: () => abortController.abort() }
+}
+
+const getAllUserEvents = () => {
+    const abortController = new AbortController()
+    const req = apiClient.get<IEvent[]>('event/myEvents', { signal: abortController.signal })
     return { req, abort: () => abortController.abort() }
 }
 
@@ -48,7 +55,8 @@ export const uploadEvent = (event: IEvent) => {
 }
 
 export default { 
-    getAllEvents, 
+    getAllEvents,
+    getAllUserEvents, 
     getEventById,
     updateEvent
  }

@@ -17,6 +17,9 @@ function EventPage() {
     const [error, setError] = useState()
     const [isHidden, setIsHidden] = useState(false)
     const [message, setMessage] = useState('');
+    const [isEditable, setEditable] = useState(false);
+
+    const userId = localStorage.getItem('user_id');
 
     const handleChange = change => {
       setMessage(change.target.value);
@@ -32,7 +35,9 @@ function EventPage() {
         const { req, abort } = EventsService.getEventById(eventId)
         req.then((res) => {
             setEvent(res.data)
-            console.log(event)
+            if (userId == event.ownerId) {
+                setEditable(true);
+            }
         }).catch((err) => {
             console.log(err)
             if (err instanceof CanceledError) return
