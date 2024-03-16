@@ -10,7 +10,7 @@ export interface IEvent {
     artist: string;
     phone?: string;
     comments: string[];
-    _id: string;
+    _id?: string;
     ownerId: string;
 }
 
@@ -39,6 +39,12 @@ const updateEvent = (event : IEvent) => {
     return { req, abort: () => abortController.abort() }
 }
 
+const deleteEventById = (eventId : string) => {
+    const abortController = new AbortController()
+    const req = apiClient.delete('event/' + eventId, { signal: abortController.signal })
+    return { req, abort: () => abortController.abort() }
+}
+
 export const uploadEvent = (event: IEvent) => {
     const abortController = new AbortController()
     console.log(event)
@@ -58,5 +64,6 @@ export default {
     getAllEvents,
     getAllUserEvents, 
     getEventById,
-    updateEvent
+    updateEvent,
+    deleteEventById
  }

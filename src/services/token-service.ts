@@ -1,8 +1,7 @@
 import Cookies from 'js-cookie';
 
-export async function setAccessToken(token : any, userEmail: string) {
-  Cookies.set('accessToken', token, { expires: 1/24 }); // Store for 1 hour
-  Cookies.set('userEmail', userEmail, {expire: 1/24});
+export async function setAccessToken(token : any) {
+  Cookies.set('accessToken', token, { expires: 1/24 }); // Store for 1 hou
 }
 
 export function getAccessToken(): string {
