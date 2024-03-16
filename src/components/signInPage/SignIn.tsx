@@ -54,8 +54,8 @@ const SignInPage = ({onLoggin} : any) => {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+    <div>
+      <Grid container component="main" sx={{height: '100vh'}}>
         <Grid
           item
           xs={false}
@@ -67,7 +67,7 @@ const SignInPage = ({onLoggin} : any) => {
             backgroundPosition: 'center',
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} md={5} >
           <Box
             sx={{
               my: 8,
@@ -83,7 +83,7 @@ const SignInPage = ({onLoggin} : any) => {
             </Typography>
             <Box component="form" noValidate onSubmit={handleLogginSubmit} sx={{ mt: 1 }}>
               
-              <Grid marginTop={'100px'}>
+              <Grid marginTop={'60px'}>
                 <TextField
                   margin="normal"
                   required
@@ -106,7 +106,7 @@ const SignInPage = ({onLoggin} : any) => {
                 />
               </Grid>
               
-              <Grid textAlign='center'>
+              <Grid textAlign='right'>
                 <Button
                   type="submit"
                   style={{ backgroundColor: '#0D0125', fontFamily: 'cursive' }}
@@ -117,22 +117,27 @@ const SignInPage = ({onLoggin} : any) => {
                 </Button>
               </Grid>
               
-              <Grid container>
-                <Grid item>
+              <Grid container marginTop={'40px'}>
+                <Grid width={'200px'} style={{display:'flex', margin:'auto'}}>
+                  <GoogleLogin onSuccess={onGoogleLoginSuccess} onError={onGoogleLoginFailure}/>
+                </Grid>
+              </Grid>
+              
+
+              <Grid container marginTop={'20px'}>
+                <Grid item style={{display:'flex', margin:'auto'}}>
                   <Link href="/registration" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>
               
-              <Grid width={'200px'} alignItems={'center'}>
-                <GoogleLogin onSuccess={onGoogleLoginSuccess} onError={onGoogleLoginFailure}/>
-              </Grid>
+              
             </Box>
           </Box>
         </Grid>
       </Grid>
-    </ThemeProvider>
+      </div>
   );
 };
 

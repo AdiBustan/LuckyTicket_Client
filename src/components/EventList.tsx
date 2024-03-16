@@ -23,15 +23,16 @@ function EventList() {
     
 
     return (
-        <>
-        {events.map((item, index) =>
-            <div className="p-4" key={index}>
-                <Link to={'/event/' + item._id} style={{textDecoration: 'none'}}>
-                <Event event={item}/>
-                </Link>
-            </div>
-        )}
-        </>
+        <div className="container">
+            <div className="row">
+                {events.map((item, index) =>
+                    <div className="col-md-3 mb-4" key={index}>
+                        <Link to={'/event/' + item._id} style={{textDecoration: 'none'}}>
+                        <Event event={item}/>
+                        </Link>
+                    </div>
+                )} </div>
+                </div>
     )
 
 

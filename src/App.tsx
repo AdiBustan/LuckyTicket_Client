@@ -21,22 +21,52 @@ function App() {
   };
 
   return (
-      <BrowserRouter>
-        <Grid container spacing={12}>
-        {isLoggedIn && <Grid item xs={2}>
-            <NavBar/>
-          </Grid>}
-          <Grid item xs={10} marginTop={'20px'}>
-            <Routes>
-              <Route path='/' element={isLoggedIn ? <EventList/> : <SignInPage onLoggin={handleFormSubmit}/>}/>
-              <Route path='uploadEvent' element={isLoggedIn ? <UploadEvent/> : <SignInPage onLoggin={handleFormSubmit}/>}/>
-              <Route path='profile' element={isLoggedIn ? <ProfilePage/> : <SignInPage onLoggin={handleFormSubmit}/>}/>
-              <Route path="event/:id" element={isLoggedIn ? <EventPage/> : <SignInPage onLoggin={handleFormSubmit}/>}/>
-              <Route path="registration" element={<RegistrationPage onLoggin={handleFormSubmit}/>} />
-            </Routes>
+
+    <BrowserRouter>
+      <Grid container spacing={12}>
+        {/* Navbar section */}
+        {isLoggedIn && (
+          <Grid item xs={2}>
+            <NavBar />
           </Grid>
+        )}
+
+        {/* Main content section */}
+        <Grid item xs={isLoggedIn ? 10 : 12} marginTop={isLoggedIn ? '30px' : '0px'}>
+          <Routes>
+            {/* Home page route */}
+            <Route
+              path='/'
+              element={
+                isLoggedIn ? <EventList /> : <SignInPage onLoggin={handleFormSubmit} />
+              }
+            />
+
+            {/* Upload event page route */}
+            <Route
+              path='/uploadEvent'
+              element={
+                isLoggedIn ? <UploadEvent /> : <SignInPage onLoggin={handleFormSubmit} />
+              }
+            />
+
+            {/* Event page route */}
+            <Route
+              path='event/:id'
+              element={
+                isLoggedIn ? <EventPage /> : <SignInPage onLoggin={handleFormSubmit} />
+              }
+            />
+
+            {/* Registration page route */}
+            <Route
+              path='registration'
+              element={<RegistrationPage onLoggin={handleFormSubmit} />}
+            />
+          </Routes>
         </Grid>
-      </BrowserRouter>
+      </Grid>
+    </BrowserRouter>
   )
 }
 

@@ -8,8 +8,7 @@ export interface IEvent {
     location: string;
     city: string;
     artist: string;
-    image: string;
-    phone: string;
+    phone?: string;
     comments: string[];
     _id: string;
 }
