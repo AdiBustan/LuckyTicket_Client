@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
-import Event from './event/Event'
-import EventService, { CanceledError, IEvent } from "../services/Events-service"
+import Event from '../event/Event'
+import EventService, { CanceledError, IEvent } from "../../services/Events-service"
 import { Link } from 'react-router-dom'
 
-function EventList() {
+function UserEventList() {
     const [events, setEvents] = useState<IEvent[]>([])
     const [error, setError] = useState()
     
     useEffect(() => {
-        const { req, abort } = EventService.getAllEvents()
+        const { req, abort } = EventService.getAllUserEvents()
         req.then((res) => {
             setEvents(res.data)
         }).catch((err) => {
@@ -38,4 +38,4 @@ function EventList() {
 
 }
 
-export default EventList
+export default UserEventList
