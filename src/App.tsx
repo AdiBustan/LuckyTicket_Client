@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignInPage from './components/signInPage/SignIn';
 import RegistrationPage from './components/signInPage/Registration';
 import { useState } from 'react';
+import Cookies from 'js-cookie';
 import NavBar from './components/navbar/NavBar';
 import { Grid } from '@mui/material';
 import EventList from './components/EventList';
@@ -22,8 +23,12 @@ function App() {
 
   const handleLogout = () => {
     console.log('User Logout');
-    localStorage.setItem("user_id", '');
+    localStorage.clear();
+    sessionStorage.clear();
+    Cookies.remove('accessToken');
+    Cookies.remove('refreshToken');
     setIsLoggedIn(false);
+    window.location.href = '/';
   }
 
   return (

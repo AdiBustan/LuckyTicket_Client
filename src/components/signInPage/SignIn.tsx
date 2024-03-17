@@ -10,7 +10,7 @@ import { googleSignin, IUser, logInUser } from '../../services/User-service';
 import { setAccessToken, setRefreshToken } from '../../services/token-service';
 
 
-const SignInPage = ({onLoggin} : any) => {
+const SignInPage = ({onLoggin} : any) => { 
 
   const handleLogginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

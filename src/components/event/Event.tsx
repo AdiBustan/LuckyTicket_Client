@@ -21,7 +21,7 @@ function Event({ event }: EventProps) {
 
     return (
         <Card style={{ width: '14rem' }} className='eventCard'>
-        <Card.Img variant="top" src={localStorage.getItem(event.artist)} height={'200erm'} />
+        <Card.Img variant="top" src={localStorage.getItem(event.imgName)} height={'200erm'} />
         <Card.Body>
           <Grid container spacing={3}>
             <Grid item xs={8}>
