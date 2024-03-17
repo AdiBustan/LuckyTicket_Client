@@ -57,9 +57,9 @@ function EditEvent({ event }: EventProps){
       const data = new FormData(newEvent.currentTarget);
       console.log(data)
       
-      var date = event.date;
-      var hour = event.hour;
-      var city = event.city;
+      let date = event.date;
+      let hour = event.hour;
+      let city = event.city;
 
       if (data.get('date')) {
         date = data.get('date') as string;
