@@ -1,5 +1,7 @@
 import { CredentialResponse } from "@react-oauth/google"
 import apiClient from "./Api-client"
+import Cookies from 'js-cookie';
+
 
 export interface IUser {
     username?: string,
@@ -40,9 +42,16 @@ export const googleSignin = (credentialResponse: CredentialResponse) => {
         apiClient.post("/auth/google", credentialResponse).then((response) => {
             console.log(response)
             resolve(response.data)
+            // saveToCookies(response.data)
         }).catch((error) => {
             console.log(error)
             reject(error)
         })
     })
+}
+
+export const getUserByEmail = () => {
+    const abortController = new AbortController()
+    const req = apiClient.get<IUser>('user', { signal: abortController.signal })
+    return { req, abort: () => abortController.abort() }
 }

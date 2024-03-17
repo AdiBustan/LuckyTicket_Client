@@ -1,4 +1,4 @@
-import { Grid, IconButton, TextField } from "@mui/material";
+import {Grid, IconButton, TextField } from "@mui/material";
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import QueryBuilderOutlinedIcon from '@mui/icons-material/QueryBuilderOutlined';
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
@@ -8,16 +8,20 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import EventsService, { CanceledError } from "../services/Events-service";
-import EventData from './event/Event'
+import EventsService, { CanceledError, IEvent } from "../services/Events-service";
 import CommentList from "./comments/CommentList";
+
+import EditEvent from "./profilePage/EditEvent";
 
 function EventPage() {
     const param = useParams();
-    const [event, setEvent] = useState<EventData>([])
+    const [event, setEvent] = useState<IEvent>([])
     const [error, setError] = useState()
     const [isHidden, setIsHidden] = useState(false)
     const [message, setMessage] = useState('');
+    const [isEditable, setEditable] = useState(false);
+
+    const userId = localStorage.getItem('user_id');
 
     const handleChange = change => {
       setMessage(change.target.value);
@@ -33,7 +37,10 @@ function EventPage() {
         const { req, abort } = EventsService.getEventById(eventId)
         req.then((res) => {
             setEvent(res.data)
-            console.log(event)
+            console.log("owner:" + res.data.ownerId + " user: " + userId);
+            if (userId == res.data.ownerId) {
+                setEditable(true);
+            }
         }).catch((err) => {
             console.log(err)
             if (err instanceof CanceledError) return
@@ -46,8 +53,8 @@ function EventPage() {
     }, [])
 
 
-    function addComment(event: EventData) {
-        const newEvent :EventData = event;
+    function addComment(event: IEvent) {
+        const newEvent :IEvent = event;
         const newComment = message as string;
     
         newEvent.comments.push(newComment);
@@ -77,6 +84,7 @@ function EventPage() {
                 <Grid item xs={3} >
                     <img elevation={3} width={'200px'} src={localStorage.getItem(event.artist)} />
                 </Grid>
+                {isEditable ? <EditEvent event={event}/> :
                 <Grid marginTop={'30px'} container item xs={8}>
                     <Grid item xs={4} style={{fontSize: 20}}>
                         <CalendarMonthOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.date}
@@ -91,7 +99,7 @@ function EventPage() {
                         <LocationOnOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.location}, {event.city}
                     </Grid>
                 </Grid>
-                
+                }
                 
                 
                 <Grid item xs={3} marginTop={'70px'}>
