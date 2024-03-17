@@ -19,17 +19,17 @@ export async function getRefreshToken() {
 }
 
 export async function refreshAccessToken(refreshToken : any) {
-    const response = await fetch('/auth/refresh', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refreshToken }),
-    });
-  
-    if (!response.ok) {
-      throw new Error('Failed to refresh access token');
-    }
-  
-    const data = await response.json();
-    return data.accessToken; 
+  const response = await fetch('/auth/refresh', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refreshToken }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to refresh access token');
+  }
+
+  const data = await response.json();
+  return data.accessToken;
   }
 
