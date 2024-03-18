@@ -7,6 +7,7 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { CanceledError } from "axios";
 import UserEventList from "./UserEventList";
+import FileService from "../../services/File-service";
 
 
 function ProfilePage({onLogout} : any) {
@@ -17,9 +18,16 @@ function ProfilePage({onLogout} : any) {
     
     useEffect(() => {
         const { req, abort } = getUserByEmail()
-        req.then((res) => {
+        req.then(async (res) => {
+            if (res.data.imgName) {
+                const response = await FileService.getImage(res.data.imgName);
+                const imageSrc = URL.createObjectURL(response.req.data);
+                if (!localStorage.getItem(res.data.imgName)) {
+                    localStorage.setItem(res.data.imgName , imageSrc); 
+                } 
+            }
+
             setUser(res.data)
-            console.log(event)
         }).catch((err) => {
             console.log(err)
             if (err instanceof CanceledError) return
@@ -45,7 +53,7 @@ function ProfilePage({onLogout} : any) {
                 <Grid item xs={3} >
                     <Avatar
                         alt={user?.username}
-                        src={user?.imgUrl ? user.imgUrl : "../../images/profile_avatar.png"}
+                        src={user?.imgName ? localStorage.getItem(user.imgName) : "../../images/profile_avatar.png"}
                         sx={{ width: 200, height: 200 }} />
                 </Grid>
                 <Grid item xs={5} marginTop={'40px'}>

@@ -8,7 +8,7 @@ export interface IUser {
     email: string,
     password?: string,
     phone?: string,
-    imgUrl?: string,
+    imgName?: string,
     _id?: string,
     accessToken?: string,
     refreshToken?: string

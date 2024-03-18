@@ -82,7 +82,7 @@ function EventPage() {
                     <h1>{event.artist}</h1>
                 </Grid>
                 <Grid item xs={3} >
-                    <img elevation={3} width={'200px'} src={localStorage.getItem(event.artist)} />
+                    <img elevation={3} width={'200px'} src={localStorage.getItem(event.imgName)} />
                 </Grid>
                 {isEditable ? <EditEvent event={event}/> :
                 <Grid marginTop={'30px'} container item xs={8}>
