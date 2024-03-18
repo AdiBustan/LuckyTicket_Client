@@ -22,7 +22,7 @@ function ProfilePage({onLogout} : any) {
             if (res.data.imgName) {
                 const response = await FileService.getImage(res.data.imgName);
                 const imageSrc = URL.createObjectURL(response.req.data);
-                if (localStorage.getItem(res.data.imgName) == '') {
+                if (!localStorage.getItem(res.data.imgName)) {
                     localStorage.setItem(res.data.imgName , imageSrc); 
                 } 
             }

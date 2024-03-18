@@ -25,7 +25,6 @@ const uploadImage = async (formData: FormData) => {
 }
 
 
-
 export default { 
     getImage,
     uploadImage

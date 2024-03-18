@@ -9,7 +9,6 @@ import { CredentialResponse, GoogleLogin} from '@react-oauth/google'
 import { googleSignin, IUser, logInUser } from '../../services/User-service';
 import { setAccessToken, setRefreshToken } from '../../services/token-service';
 
-
 const SignInPage = ({onLoggin} : any) => { 
 
   const handleLogginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -21,12 +20,14 @@ const SignInPage = ({onLoggin} : any) => {
         'phone': "0544444"
     }
     const res = await logInUser(user)
-    onLoggin(res);
 
     if (res.accessToken) {
-      setAccessToken(res.accessToken);
-      setRefreshToken(res.refreshToken);
+       setAccessToken(res.accessToken);
+       setRefreshToken(res.refreshToken);
+      console.log("Have all the tokens");
+      onLoggin(res);
     }
+    
     console.log(user)
   };
 
