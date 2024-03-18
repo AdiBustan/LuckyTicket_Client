@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import Event from './event/Event'
-import EventService, { CanceledError, IEvent } from "../services/Events-service"
+import Event from '../event/Event'
+import EventService, { CanceledError, IEvent } from "../../services/Events-service"
 import { Link } from 'react-router-dom'
 
 function EventList() {

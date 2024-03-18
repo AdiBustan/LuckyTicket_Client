@@ -10,11 +10,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { IEvent, uploadEvent } from '../services/Events-service';
+import { IEvent, uploadEvent } from '../../services/Events-service';
 import {useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Autocomplete } from '@mui/material';
-import AlertDialog from './AlertDialog';
+import AlertDialog from '../../services/AlertDialog';
 
 
 

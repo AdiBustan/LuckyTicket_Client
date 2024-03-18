@@ -8,7 +8,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Typography from '@mui/material/Typography';
 import { IUser, registrUser } from '../../services/User-service';
 import { setAccessToken, setRefreshToken } from '../../services/token-service';
-import AlertDialog from '../AlertDialog';
+import AlertDialog from '../../services/AlertDialog';
 import {useNavigate } from 'react-router-dom';
 
 const RegistrationPage = ({onLoggin} : any) => {
@@ -123,7 +123,7 @@ const RegistrationPage = ({onLoggin} : any) => {
                 required
                 fullWidth
                 name="phone"
-                label="Phone Number"
+                label="Contact Info"
                 type="phone"
                 id="phone"
               />
