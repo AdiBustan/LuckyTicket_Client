@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React , { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
@@ -10,24 +10,28 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { IEvent, uploadEvent } from '../../services/Events-service';
 import {useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Autocomplete } from '@mui/material';
+import FileService from '../../services/File-service';
+import { IEvent, uploadEvent } from '../../services/Events-service';
 import AlertDialog from '../../services/AlertDialog';
 
 
 
 function UploadEvent() {
+  const [currFile, setFile] = useState();
+  const [options, setOptions] = useState([{ label: "Tel Aviv, Israel" }])
+  const [selectedImage, setSelectedImage] = useState("");
+  const [open, setOpen] = useState(false);
 
-  const [options, setOptions] = React.useState([{ label: "Tel Aviv, Israel" }])
-  const [selectedImage, setSelectedImage] = React.useState("");
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
+  
 
   const handleOpenDialog = () => { setOpen(true) };
   const handleClose = () => { setOpen(false) };
 
+  
   const fetchLocations = async () => {
     try {
       await axios
@@ -51,12 +55,15 @@ function UploadEvent() {
       console.log("Error fetching locations: " + error);
     }
   };
+  
 
-  fetchLocations();
+  useEffect(() => {
+    fetchLocations();
+  }, [])
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    console.log(options)
+    setFile(file);
     if (file) {
       // Display the selected image
       const reader = new FileReader();
@@ -68,10 +75,16 @@ function UploadEvent() {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
+    const imageData = new FormData();
+    imageData.append('image', currFile);
+    
+    const imgRes = await FileService.uploadImage(imageData);
+    
+
     console.log(data)
     const eventToUpload: IEvent = {
       'date': data.get('date') as string,
@@ -79,7 +92,8 @@ function UploadEvent() {
       'location': data.get('location') as string,
       'city': data.get('city') as string,
       'artist': data.get('artist') as string,
-      'comments': [] as string[]
+      'comments': [] as string[],
+      'imgName': imgRes.req.data,
     }
 
 
@@ -88,7 +102,7 @@ function UploadEvent() {
       handleOpenDialog();
       
     } else {
-      localStorage.setItem(eventToUpload.artist, selectedImage)
+      
       uploadEvent(eventToUpload)    
     
       navigate('/')
@@ -157,7 +171,7 @@ function UploadEvent() {
                   accept="image/*"
                   style={{ display: 'none'}}
                   id="image-upload"
-                  name='image-upload'
+                  name='image'
                   type="file"
                   onChange={handleImageChange}
                 />
