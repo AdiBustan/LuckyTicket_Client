@@ -12,7 +12,7 @@ export { CanceledError }
 // });  
 
 const apiClient = axios.create({
-     baseURL: 'https://127.0.0.1:443',
+     baseURL: 'https://10.10.248.194:443',
      headers: {
           'authorization': `Bearer ${getAccessToken()}`
      }
