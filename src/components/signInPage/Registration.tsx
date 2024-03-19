@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React , { useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
@@ -9,11 +9,13 @@ import Typography from '@mui/material/Typography';
 import { IUser, registrUser } from '../../services/User-service';
 import { setAccessToken, setRefreshToken } from '../../services/token-service';
 import AlertDialog from '../../services/AlertDialog';
+import FileService from '../../services/File-service';
 import {useNavigate } from 'react-router-dom';
 
 const RegistrationPage = ({onLoggin} : any) => {
-  const [selectedImage, setSelectedImage] = React.useState("/images/profile_avatar.jpg");
-  const [open, setOpen] = React.useState(false);
+  const [currFile, setFile] = useState();
+  const [selectedImage, setSelectedImage] = useState("/images/profile_avatar.jpg");
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleOpenDialog = () => { setOpen(true) };
@@ -22,11 +24,17 @@ const RegistrationPage = ({onLoggin} : any) => {
   const handleRegisterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const imageData = new FormData();
+    imageData.append('image', currFile);
+    
+    const imgRes = await FileService.uploadImage(imageData);
+    
     const user: IUser = {
         'username': data.get('username') as string,
         'email': data.get('email') as string,
         'password': data.get('password') as string,
-        'phone': data.get('phone') as string
+        'phone': data.get('phone') as string,
+        'imgName': imgRes.req.data
 
     }
 
@@ -35,7 +43,6 @@ const RegistrationPage = ({onLoggin} : any) => {
       handleOpenDialog();
     } else {
       const res = await registrUser(user)
-      localStorage.setItem(user.email, selectedImage)
       onLoggin(res);
 
       if (res.accessToken) {
@@ -51,6 +58,7 @@ const RegistrationPage = ({onLoggin} : any) => {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+    setFile(file);
     if (file) {
       // Display the selected image
       const reader = new FileReader();
@@ -89,7 +97,7 @@ const RegistrationPage = ({onLoggin} : any) => {
                   accept="image/*"
                   style={{ display: 'none'}}
                   id="image-upload"
-                  name='image-upload'
+                  name='image'
                   type="file"
                   onChange={handleImageChange}
                 />

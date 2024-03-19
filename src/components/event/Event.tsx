@@ -18,10 +18,11 @@ function Event({ event }: EventProps) {
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
 
+  const dataURL = localStorage.getItem(event.imgName);
 
     return (
         <Card style={{ width: '14rem' }} className='eventCard'>
-        <Card.Img variant="top" src={localStorage.getItem(event.artist)} height={'200erm'} />
+        <Card.Img variant="top" src={dataURL} height={'200erm'} />
         <Card.Body>
           <Grid container spacing={3}>
             <Grid item xs={8}>

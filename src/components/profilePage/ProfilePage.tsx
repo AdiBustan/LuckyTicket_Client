@@ -7,6 +7,7 @@ import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { CanceledError } from "axios";
 import UserEventList from "./UserEventList";
+import FileService from "../../services/File-service";
 import EditProfile from "./EditProfile";
 import React from "react";
 
@@ -21,10 +22,18 @@ function ProfilePage({onLogout} : any) {
     useEffect(() => {
         console.log("starting")
         const { req, abort } = getUserByEmail()
-        req.then((res) => {
+        console.log(req)
+        req.then(async (res) => {
+            if (res.data.imgName) {
+                const response = await FileService.getImage(res.data.imgName);
+                const imageSrc = URL.createObjectURL(response.req.data);
+                if (!localStorage.getItem(res.data.imgName)) {
+                    localStorage.setItem(res.data.imgName , imageSrc); 
+                } 
+            }
+
             setUser(res.data)
-            setSelectedImage(localStorage.getItem(user.imgUrl))
-            console.log("user is:" + user)
+            setSelectedImage(localStorage.getItem(user?.imgName))
         }).catch((err) => {
             console.log(err)
             if (err instanceof CanceledError) return
@@ -47,7 +56,8 @@ function ProfilePage({onLogout} : any) {
             <Grid container item xs={10} marginTop={'40px'} marginLeft={'20px'}>
                 <Grid item xs={3} >
                     <Avatar
-                        src={selectedImage}
+                        alt={user?.username}
+                        src={user?.imgName ? localStorage.getItem(user.imgName) : "../../images/profile_avatar.png"}
                         sx={{ width: 200, height: 200 }} />
                 </Grid>
                 <Grid item xs={8} marginTop={'40px'}>

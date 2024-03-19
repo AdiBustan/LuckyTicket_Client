@@ -12,6 +12,7 @@ export interface IEvent {
     comments: string[];
     _id?: string;
     ownerId: string;
+    imgName: string; 
 }
 
 export { CanceledError }
@@ -54,10 +55,6 @@ export const uploadEvent = (event: IEvent) => {
     }).catch((error) => {
         console.log(error)
     })
-
-
-    // const req = apiClient.post('event/', event, { signal: abortController.signal })
-    // return { req, abort: () => abortController.abort() }
 }
 
 export default { 
