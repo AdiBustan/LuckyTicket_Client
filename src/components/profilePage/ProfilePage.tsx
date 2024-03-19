@@ -13,16 +13,13 @@ import React from "react";
 
 
 function ProfilePage({onLogout} : any) {
-    const [selectedImage, setSelectedImage] = React.useState(localStorage.getItem("../../images/profile_avatar.png"));
     const [user, setUser] = useState<IUser>();
     const [error, setError] = useState()
     const [isEditMode, setIsEditMode] = useState(false)
     const navigate = useNavigate();
     
     useEffect(() => {
-        console.log("starting")
         const { req, abort } = getUserByEmail()
-        console.log(req)
         req.then(async (res) => {
             if (res.data.imgName) {
                 const response = await FileService.getImage(res.data.imgName);
@@ -33,7 +30,6 @@ function ProfilePage({onLogout} : any) {
             }
 
             setUser(res.data)
-            setSelectedImage(localStorage.getItem(user?.imgName))
         }).catch((err) => {
             console.log(err)
             if (err instanceof CanceledError) return
@@ -66,7 +62,7 @@ function ProfilePage({onLogout} : any) {
                         <h5 style={{marginTop: '20px', fontFamily: 'cursive'}}>{user?.phone}</h5>
                     </div>
                 </Grid>
-                <Grid item xs={8} marginTop={'8%'}>
+                <Grid item xs={12} marginTop={'8%'}>
                     <h2 style={{fontFamily: 'cursive', marginLeft:'2%'}}>Uploaded Events:</h2>
                     <div style={{marginTop: '5%'}}>
                         <UserEventList/>

@@ -22,7 +22,7 @@ const getAllEvents = () => {
     return { req, abort: () => abortController.abort() }
 }
 
-const getAllUserEvents = () => {
+export const getAllUserEvents = () => {
     const abortController = new AbortController()
     const req = apiClient.get<IEvent[]>('event/myEvents', { signal: abortController.signal })
     return { req, abort: () => abortController.abort() }

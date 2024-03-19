@@ -27,21 +27,21 @@ const RegistrationPage = ({onLoggin} : any) => {
     const imageData = new FormData();
     imageData.append('image', currFile);
     
-    const imgRes = await FileService.uploadImage(imageData);
     
     const user: IUser = {
         'username': data.get('username') as string,
         'email': data.get('email') as string,
         'password': data.get('password') as string,
-        'phone': data.get('phone') as string,
-        'imgName': imgRes.req.data
-
+        'phone': data.get('phone') as string
     }
 
     if (!user.username || !user.email || !user.password ||
-        !user.phone || !selectedImage) {
+        !user.phone || selectedImage == "/images/profile_avatar.jpg") {
       handleOpenDialog();
     } else {
+      const imgRes = await FileService.uploadImage(imageData);
+      user.imgName = imgRes.req.data
+      
       const res = await registrUser(user)
       onLoggin(res);
 

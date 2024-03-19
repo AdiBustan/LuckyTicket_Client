@@ -13,6 +13,7 @@ import { Autocomplete } from '@mui/material';
 import AlertDialog from '../../services/AlertDialog';
 import { useNavigate } from 'react-router';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import FileService from '../../services/File-service';
 
 
 interface EventProps {
@@ -20,9 +21,9 @@ interface EventProps {
 }
 
 function EditEvent({ event }: EventProps){
-
+    const [currFile, setFile] = React.useState();
     const [options, setOptions] = React.useState([{ label: "Tel Aviv, Israel" }]);
-    const [selectedImage, setSelectedImage] = React.useState(localStorage.getItem(event.artist));
+    const [selectedImage, setSelectedImage] = React.useState(localStorage.getItem(event.imgName));
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);  
     const handleClose = () => { setOpen(false) };
@@ -55,6 +56,7 @@ function EditEvent({ event }: EventProps){
   
     const handleImageChange = (event) => {
       const file = event.target.files[0];
+      setFile(file);
       if (file) {
         // Display the selected image
         const reader = new FileReader();
@@ -66,12 +68,15 @@ function EditEvent({ event }: EventProps){
       }
     };
 
-    const handleSubmit = (newEvent: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (newEvent: React.FormEvent<HTMLFormElement>) => {
       newEvent.preventDefault();
     
       const data = new FormData(newEvent.currentTarget);
-      console.log(data)
+      const imageData = new FormData();
+      imageData.append('image', currFile);
       
+      const imgRes = await FileService.uploadImage(imageData);
+
       let date = event.date;
       let hour = event.hour;
       let city = event.city;
@@ -94,11 +99,11 @@ function EditEvent({ event }: EventProps){
         'city': city,
         'artist': data.get('artist') as string,
         'comments': event.comments,
+        'imgName': imgRes.req.data,
         'ownerId': event.ownerId
       }
         
       EventsService.updateEvent(eventToUpload)    
-        
       navigate('/')
 
       

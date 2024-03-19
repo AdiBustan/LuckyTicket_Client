@@ -21,7 +21,7 @@ interface UserProps {
 }
 
 function EditEvent({ user }: UserProps){
-    const [selectedImage, setSelectedImage] = React.useState(localStorage.getItem(user.imgUrl));
+    const [selectedImage, setSelectedImage] = React.useState('/images/avatar.png');
     const navigate = useNavigate();
   
     const handleSubmit = (newEvent: React.FormEvent<HTMLFormElement>) => {
@@ -43,7 +43,7 @@ function EditEvent({ user }: UserProps){
         'email': user.email,
         'password': user.password,
         'phone': phone,
-        'imgUrl': user.imgUrl,
+        'imgName': user.imgName,
         'accessToken': user.accessToken,
         'refreshToken': user.refreshToken
       }
