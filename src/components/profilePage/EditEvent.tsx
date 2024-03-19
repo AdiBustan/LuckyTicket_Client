@@ -70,13 +70,15 @@ function EditEvent({ event }: EventProps){
 
     const handleSubmit = async (newEvent: React.FormEvent<HTMLFormElement>) => {
       newEvent.preventDefault();
-    
-      const data = new FormData(newEvent.currentTarget);
-      const imageData = new FormData();
-      imageData.append('image', currFile);
+      let imgRes;
       
-      const imgRes = await FileService.uploadImage(imageData);
-
+      const data = new FormData(newEvent.currentTarget);
+      if (currFile) {
+        const imageData = new FormData();
+        imageData.append('image', currFile);
+        imgRes = await FileService.uploadImage(imageData);
+      }
+      
       let date = event.date;
       let hour = event.hour;
       let city = event.city;
@@ -99,10 +101,11 @@ function EditEvent({ event }: EventProps){
         'city': city,
         'artist': data.get('artist') as string,
         'comments': event.comments,
-        'imgName': imgRes.req.data,
+        'imgName': imgRes ? imgRes.req.data : event.imgName,
         'ownerId': event.ownerId
       }
         
+      
       EventsService.updateEvent(eventToUpload)    
       navigate('/')
 

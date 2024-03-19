@@ -3,17 +3,10 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TimePicker } from '@mui/x-date-pickers';
-import EventsService , { IEvent }  from '../../services/Events-service';
-import axios from 'axios';
-import { Autocomplete } from '@mui/material';
-import AlertDialog from '../../services/AlertDialog';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useNavigate } from 'react-router';
 import { IUser, updateUser } from '../../services/User-service';
+import FileService from '../../services/File-service';
 
 
 interface UserProps {
@@ -21,15 +14,24 @@ interface UserProps {
 }
 
 function EditEvent({ user }: UserProps){
-    const [selectedImage, setSelectedImage] = React.useState('/images/avatar.png');
+    const [currFile, setFile] = React.useState();
+    const [selectedImage, setSelectedImage] = React.useState(user.imgName ? localStorage.getItem(user.imgName) : '/images/avatar.png');
     const navigate = useNavigate();
   
-    const handleSubmit = (newEvent: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (newEvent: React.FormEvent<HTMLFormElement>) => {
       newEvent.preventDefault();
-      const data = new FormData(newEvent.currentTarget);
+      let imgRes;
       
+      const data = new FormData(newEvent.currentTarget);
+      if (currFile) {
+        const imageData = new FormData();
+        imageData.append('image', currFile);
+        imgRes = await FileService.uploadImage(imageData);
+      }
+
       let username = user.username;
       let phone = user.phone;
+
       if (data.get('username')) {
         username = data.get('username') as string;
       }
@@ -43,7 +45,7 @@ function EditEvent({ user }: UserProps){
         'email': user.email,
         'password': user.password,
         'phone': phone,
-        'imgName': user.imgName,
+        'imgName': imgRes ? imgRes.req.data : user.imgName,
         'accessToken': user.accessToken,
         'refreshToken': user.refreshToken
       }
@@ -54,6 +56,7 @@ function EditEvent({ user }: UserProps){
 
     const handleImageChange = (event) => {
       const file = event.target.files[0];
+      setFile(file);
       if (file) {
         // Display the selected image
         const reader = new FileReader();

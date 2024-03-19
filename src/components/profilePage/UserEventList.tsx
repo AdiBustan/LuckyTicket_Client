@@ -16,8 +16,6 @@ function EventList() {
             const currEvents: IEvent[] = res.data;
 
             currEvents.forEach(async event => {
-                console.log("===============image name- client" + event.imgName)
-
                 const response = await FileService.getImage(event.imgName);
                 const imageSrc = URL.createObjectURL(response.req.data);
                 if (!localStorage.getItem(event.imgName)) {
