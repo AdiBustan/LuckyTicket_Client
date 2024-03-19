@@ -4,7 +4,7 @@ import { CanceledError } from "./Api-client"
 
 export { CanceledError }
 
-const baseUrl = 'http://127.0.0.1:3000';
+const baseUrl = 'https://127.0.0.1:443';
 
 const getImage = async (imgName : string) => {
     const abortController = new AbortController()
