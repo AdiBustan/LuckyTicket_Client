@@ -14,7 +14,7 @@ import {useNavigate } from 'react-router-dom';
 
 const RegistrationPage = ({onLoggin} : any) => {
   const [currFile, setFile] = useState();
-  const [selectedImage, setSelectedImage] = useState("/images/profile_avatar.jpg");
+  const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>("/images/profile_avatar.jpg");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -25,7 +25,9 @@ const RegistrationPage = ({onLoggin} : any) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const imageData = new FormData();
-    imageData.append('image', currFile);
+    if (currFile) {
+      imageData.append('image', currFile);
+    }
     
     const imgRes = await FileService.uploadImage(imageData);
     
@@ -56,7 +58,7 @@ const RegistrationPage = ({onLoggin} : any) => {
     
   };
 
-  const handleImageChange = (event) => {
+  const handleImageChange = (event: any) => {
     const file = event.target.files[0];
     setFile(file);
     if (file) {
@@ -91,7 +93,7 @@ const RegistrationPage = ({onLoggin} : any) => {
             </Typography>
             
             <Box textAlign="center">
-              <img src={selectedImage} alt="Selected" style={{width: '100px', height: '100px', borderRadius:'50%'}} />
+              <img src={selectedImage as string} alt="Selected" style={{width: '100px', height: '100px', borderRadius:'50%'}} />
               <Box>
                 <input
                   accept="image/*"

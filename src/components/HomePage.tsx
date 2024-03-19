@@ -1,7 +1,6 @@
 import { Grid } from "@mui/material"
 import NavBar from "./navbar/NavBar"
 import EventList from "./EventList"
-import UploadEvent from "./UploadEvent"
 
 function HomePage() {
     return (

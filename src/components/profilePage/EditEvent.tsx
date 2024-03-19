@@ -79,7 +79,8 @@ function EditEvent({ event }: EventProps){
         'city': city,
         'artist': data.get('artist') as string,
         'comments': event.comments,
-        'ownerId': event.ownerId
+        'ownerId': event.ownerId,
+        'imgName': event.imgName
       }
         
       EventsService.updateEvent(eventToUpload)    

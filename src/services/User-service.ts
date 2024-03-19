@@ -1,6 +1,5 @@
 import { CredentialResponse } from "@react-oauth/google"
 import apiClient from "./Api-client"
-import Cookies from 'js-cookie';
 
 
 export interface IUser {

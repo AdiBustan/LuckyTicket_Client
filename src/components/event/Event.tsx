@@ -22,7 +22,7 @@ function Event({ event }: EventProps) {
 
     return (
         <Card style={{ width: '14rem' }} className='eventCard'>
-        <Card.Img variant="top" src={dataURL} height={'200erm'} />
+        <Card.Img variant="top" src={dataURL ? dataURL : undefined} height={'200erm'} />
         <Card.Body>
           <Grid container spacing={3}>
             <Grid item xs={8}>

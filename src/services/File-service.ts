@@ -1,5 +1,5 @@
 import axios from "axios";
-import apiClient, { CanceledError } from "./Api-client"
+import { CanceledError } from "./Api-client"
 
 
 export { CanceledError }

@@ -12,7 +12,7 @@ import FileService from "../../services/File-service";
 
 function ProfilePage({onLogout} : any) {
     const [user, setUser] = useState<IUser>();
-    const [error, setError] = useState()
+    // const [error, setError] = useState()
 
     const navigate = useNavigate();
     
@@ -31,7 +31,7 @@ function ProfilePage({onLogout} : any) {
         }).catch((err) => {
             console.log(err)
             if (err instanceof CanceledError) return
-            setError(err.message)
+            // setError(err.message)
         })
         return () => {
             abort()
@@ -53,7 +53,7 @@ function ProfilePage({onLogout} : any) {
                 <Grid item xs={3} >
                     <Avatar
                         alt={user?.username}
-                        src={user?.imgName ? localStorage.getItem(user.imgName) : "../../images/profile_avatar.png"}
+                        src={user?.imgName ? localStorage.getItem(user.imgName) as string : undefined}
                         sx={{ width: 200, height: 200 }} />
                 </Grid>
                 <Grid item xs={5} marginTop={'40px'}>

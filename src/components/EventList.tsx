@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import Event from './event/Event'
 import EventService, { CanceledError, IEvent } from "../services/Events-service"
-import CircularProgress from '@mui/material/CircularProgress';
 import FileService from '../services/File-service'
 import { Link } from 'react-router-dom'
 
   
 function EventList() {
     const [events, setEvents] = useState<IEvent[]>([])
-    const [error, setError] = useState()
+    // const [error, setError] = useState()
     
     useEffect(() => {
         const { req, abort } = EventService.getAllEvents()
@@ -28,7 +27,7 @@ function EventList() {
         }).catch((err) => {
             console.log(err)
             if (err instanceof CanceledError) return
-            setError(err.message)
+            // setError(err.message)
         })
         return () => {
             abort()

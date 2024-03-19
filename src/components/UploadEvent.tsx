@@ -20,9 +20,9 @@ import  FileService  from '../services/File-service';
 
 
 function UploadEvent() {
-  const [currFile, setFile] = useState();
+  const [currFile, setFile] = useState<string | Blob>();
   const [options, setOptions] = useState([{ label: "Tel Aviv, Israel" }])
-  const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>("");
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ function UploadEvent() {
     fetchLocations();
   }, [])
 
-  const handleImageChange = (event) => {
+  const handleImageChange = (event: any) => {
     const file = event.target.files[0];
     setFile(file);
     if (file) {
@@ -80,7 +80,9 @@ function UploadEvent() {
 
     const data = new FormData(event.currentTarget);
     const imageData = new FormData();
-    imageData.append('image', currFile);
+    if (currFile) {
+      imageData.append('image', currFile);
+    }
     
     const imgRes = await FileService.uploadImage(imageData);
     
@@ -93,7 +95,8 @@ function UploadEvent() {
       'city': data.get('city') as string,
       'artist': data.get('artist') as string,
       'comments': [] as string[],
-      'imgName': imgRes.req.data
+      'imgName': imgRes.req.data,
+      'ownerId': ''
     }
 
 
@@ -162,7 +165,7 @@ function UploadEvent() {
               
               {selectedImage && (
                 <Box>
-                  <img src={selectedImage} alt="Selected" style={{ width: '200px', height: 'auto' }} />
+                  <img src={selectedImage as string} alt="Selected" style={{ width: '200px', height: 'auto' }} />
                 </Box>
               )}
 
