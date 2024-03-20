@@ -11,7 +11,7 @@ function EventList() {
     const [error, setError] = useState()
     
     useEffect(() => {
-        const { req, abort } = EventService.getAllEvents()
+        const { req, abort } = EventService.getAllUserEvents()
         req.then((res) => {
             const currEvents: IEvent[] = res.data;
 

@@ -1,7 +1,5 @@
 import apiClient, { CanceledError } from "./Api-client"
 
-import { getRefreshToken, refreshAccessToken, setAccessToken } from "./token-service"
-
 export interface IEvent {
     date: string;
     hour: string;
