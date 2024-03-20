@@ -10,19 +10,19 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { IEvent, uploadEvent } from '../services/Events-service';
 import {useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Autocomplete } from '@mui/material';
-import AlertDialog from './AlertDialog';
-import  FileService  from '../services/File-service';
+import FileService from '../../services/File-service';
+import { IEvent, uploadEvent } from '../../services/Events-service';
+import AlertDialog from '../../services/AlertDialog';
 
 
 
 function UploadEvent() {
-  const [currFile, setFile] = useState<string | Blob>();
+  const [currFile, setFile] = useState();
   const [options, setOptions] = useState([{ label: "Tel Aviv, Israel" }])
-  const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>("");
+  const [selectedImage, setSelectedImage] = useState("");
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ function UploadEvent() {
     fetchLocations();
   }, [])
 
-  const handleImageChange = (event: any) => {
+  const handleImageChange = (event) => {
     const file = event.target.files[0];
     setFile(file);
     if (file) {
@@ -80,9 +80,7 @@ function UploadEvent() {
 
     const data = new FormData(event.currentTarget);
     const imageData = new FormData();
-    if (currFile) {
-      imageData.append('image', currFile);
-    }
+    imageData.append('image', currFile);
     
     const imgRes = await FileService.uploadImage(imageData);
     
@@ -96,7 +94,6 @@ function UploadEvent() {
       'artist': data.get('artist') as string,
       'comments': [] as string[],
       'imgName': imgRes.req.data,
-      'ownerId': ''
     }
 
 
@@ -165,7 +162,7 @@ function UploadEvent() {
               
               {selectedImage && (
                 <Box>
-                  <img src={selectedImage as string} alt="Selected" style={{ width: '200px', height: 'auto' }} />
+                  <img src={selectedImage} alt="Selected" style={{ width: '200px', height: 'auto' }} />
                 </Box>
               )}
 

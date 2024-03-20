@@ -8,23 +8,22 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import EventsService, { CanceledError, IEvent } from "../services/Events-service";
-import CommentList from "./comments/CommentList";
+import EventsService, { CanceledError, IEvent } from "../../services/Events-service";
+import CommentList from "../comments/CommentList";
 
-import EditEvent from "./profilePage/EditEvent";
+import EditEvent from "../profilePage/EditEvent";
 
 function EventPage() {
     const param = useParams();
-    const [event, setEvent] = useState<IEvent>()
+    const [event, setEvent] = useState<IEvent>([])
     const [error, setError] = useState()
     const [isHidden, setIsHidden] = useState(false)
     const [message, setMessage] = useState('');
     const [isEditable, setEditable] = useState(false);
-    const [image, setImage] = useState<string | null>('')
 
     const userId = localStorage.getItem('user_id');
 
-    const handleChange = (change: any) => {
+    const handleChange = change => {
       setMessage(change.target.value);
     };
 
@@ -39,10 +38,6 @@ function EventPage() {
         req.then((res) => {
             setEvent(res.data)
             console.log("owner:" + res.data.ownerId + " user: " + userId);
-            if (event?.imgName && localStorage.getItem(event.imgName)) {
-                const img = localStorage.getItem(event.imgName);
-                setImage(img);
-            }
             if (userId == res.data.ownerId) {
                 setEditable(true);
             }
@@ -56,6 +51,7 @@ function EventPage() {
             abort()
         }
     }, [])
+
 
     function addComment(event: IEvent) {
         const newEvent :IEvent = event;
@@ -83,31 +79,36 @@ function EventPage() {
             </IconButton>
             <Grid container item xs={10} spacing={4} marginLeft={'10px'}>
                 <Grid item xs={12} marginTop={'40px'}>
-                    <h1>{event?.artist}</h1>
+                    <h1 style={{fontFamily: 'cursive'}}>{event.artist}</h1>
                 </Grid>
-                <Grid item xs={3} >
-                    <img width={'200px'} src={image? image : undefined} />
+                
+                {isEditable ? <EditEvent event={event}/> :
+                <Grid container item xs={10} spacing={4}>
+                    <Grid item xs={3} >
+                        <img elevation={3} width={'200px'} src={localStorage.getItem(event.imgName)} />
+                    </Grid>
+                    <Grid marginTop={'30px'} marginLeft={'30px'} container item xs={8}>
+                        <Grid item xs={6} style={{fontSize: 20}}>
+                            <CalendarMonthOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.date}
+                        </Grid>
+                        <Grid item xs={6} style={{fontSize: 20}}>
+                            <QueryBuilderOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.hour}
+                        </Grid>
+                        <Grid item xs={6} style={{fontSize: 20}}>
+                            <LocalPhoneOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.phone}
+                        </Grid>
+                        <Grid item xs={6} style={{fontSize: 20}}>
+                            <LocationOnOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event.location}, {event.city}
+                        </Grid>
+                    </Grid>
                 </Grid>
-                {isEditable ? <EditEvent event={event as IEvent}/> :
-                <Grid marginTop={'30px'} container item xs={8}>
-                    <Grid item xs={4} style={{fontSize: 20}}>
-                        <CalendarMonthOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event?.date}
-                    </Grid>
-                    <Grid item xs={7} style={{fontSize: 20}}>
-                        <QueryBuilderOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event?.hour}
-                    </Grid>
-                    <Grid item xs={4} style={{fontSize: 20}}>
-                        <LocalPhoneOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event?.phone}
-                    </Grid>
-                    <Grid item xs={7} style={{fontSize: 20}}>
-                        <LocationOnOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 40 }}/> {event?.location}, {event?.city}
-                    </Grid>
-                </Grid>
+
+                
                 }
                 
                 
                 <Grid item xs={3} marginTop={'70px'}>
-                    <h2>Comments
+                    <h2 style={{fontFamily: 'cursive'}}>Comments
                         <IconButton onClick={onAddComment}>
                             <AddCircleOutlineOutlinedIcon sx={{ stroke: "#ffffff", strokeWidth: 0.8, fontSize: 40 }}/>
                         </IconButton>
@@ -117,7 +118,7 @@ function EventPage() {
                     <Grid item xs={3} marginTop={'10px'}>
                         <TextField id="comment" label="Insert comment" variant="outlined" onChange={handleChange} value={message}/>
                         <IconButton onClick={() => {
-                            addComment(event as IEvent);
+                            addComment(event);
                             finishAddComment;
                             }}>
                             <SendIcon sx={{ stroke: "#ffffff", strokeWidth: 1, fontSize: 25, color:"black" }}/>
@@ -125,7 +126,7 @@ function EventPage() {
                     </Grid>
                 }
                 <Grid item xs={10}>
-                    <CommentList comments={event?.comments}/>
+                    <CommentList comments={event.comments}/>
                 </Grid>
             </Grid>
         </div>

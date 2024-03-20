@@ -8,7 +8,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import Typography from '@mui/material/Typography';
 import { IUser, registrUser } from '../../services/User-service';
 import { setAccessToken, setRefreshToken } from '../../services/token-service';
-import AlertDialog from '../AlertDialog';
+import AlertDialog from '../../services/AlertDialog';
 import FileService from '../../services/File-service';
 import {useNavigate } from 'react-router-dom';
 
@@ -29,21 +29,21 @@ const RegistrationPage = ({onLoggin} : any) => {
       imageData.append('image', currFile);
     }
     
-    const imgRes = await FileService.uploadImage(imageData);
     
     const user: IUser = {
         'username': data.get('username') as string,
         'email': data.get('email') as string,
         'password': data.get('password') as string,
-        'phone': data.get('phone') as string,
-        'imgName': imgRes.req.data
-
+        'phone': data.get('phone') as string
     }
 
     if (!user.username || !user.email || !user.password ||
-        !user.phone || !selectedImage) {
+        !user.phone || selectedImage == "/images/profile_avatar.jpg") {
       handleOpenDialog();
     } else {
+      const imgRes = await FileService.uploadImage(imageData);
+      user.imgName = imgRes.req.data
+      
       const res = await registrUser(user)
       onLoggin(res);
 
@@ -133,7 +133,7 @@ const RegistrationPage = ({onLoggin} : any) => {
                 required
                 fullWidth
                 name="phone"
-                label="Phone Number"
+                label="Contact Info"
                 type="phone"
                 id="phone"
               />

@@ -7,14 +7,14 @@ import { useState } from 'react';
 import Cookies from 'js-cookie';
 import NavBar from './components/navbar/NavBar';
 import { Grid } from '@mui/material';
-import EventList from './components/EventList';
-import EventPage from './components/EventPage';
-import UploadEvent from './components/UploadEvent';
+import EventList from './components/homepage/EventList';
+import EventPage from './components/event/EventPage';
+import UploadEvent from './components/UploadEvent/UploadEvent';
 import ProfilePage from './components/profilePage/ProfilePage';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("user_id") != null);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("user_id"));
+  
   const handleFormSubmit = (data : any) => {
     console.log('Submitted data:', data);
     localStorage.setItem("user_id", data.userId);
@@ -80,7 +80,7 @@ function App() {
             {/* Registration page route */}
             <Route
               path='registration'
-              element={<RegistrationPage onLoggin={handleFormSubmit} />}
+              element={  <RegistrationPage onLoggin={handleFormSubmit} />}
             />
           </Routes>
         </Grid>

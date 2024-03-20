@@ -10,8 +10,10 @@ import { TimePicker } from '@mui/x-date-pickers';
 import EventsService , { IEvent }  from '../../services/Events-service';
 import axios from 'axios';
 import { Autocomplete } from '@mui/material';
-import AlertDialog from '../AlertDialog';
+import AlertDialog from '../../services/AlertDialog';
 import { useNavigate } from 'react-router';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import FileService from '../../services/File-service';
 
 
 interface EventProps {
@@ -19,8 +21,9 @@ interface EventProps {
 }
 
 function EditEvent({ event }: EventProps){
-
+    const [currFile, setFile] = React.useState();
     const [options, setOptions] = React.useState([{ label: "Tel Aviv, Israel" }]);
+    const [selectedImage, setSelectedImage] = React.useState(localStorage.getItem(event.imgName));
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);  
     const handleClose = () => { setOpen(false) };
@@ -51,15 +54,34 @@ function EditEvent({ event }: EventProps){
   
     fetchLocations();
   
-    const handleSubmit = (newEvent: React.FormEvent<HTMLFormElement>) => {
+    const handleImageChange = (event) => {
+      const file = event.target.files[0];
+      setFile(file);
+      if (file) {
+        // Display the selected image
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setSelectedImage(reader.result);
+          console.log(selectedImage)
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
+    const handleSubmit = async (newEvent: React.FormEvent<HTMLFormElement>) => {
       newEvent.preventDefault();
-    
-      const data = new FormData(newEvent.currentTarget);
-      console.log(data)
+      let imgRes;
       
-      var date = event.date;
-      var hour = event.hour;
-      var city = event.city;
+      const data = new FormData(newEvent.currentTarget);
+      if (currFile) {
+        const imageData = new FormData();
+        imageData.append('image', currFile);
+        imgRes = await FileService.uploadImage(imageData);
+      }
+      
+      let date = event.date;
+      let hour = event.hour;
+      let city = event.city;
 
       if (data.get('date')) {
         date = data.get('date') as string;
@@ -79,12 +101,12 @@ function EditEvent({ event }: EventProps){
         'city': city,
         'artist': data.get('artist') as string,
         'comments': event.comments,
-        'ownerId': event.ownerId,
-        'imgName': event.imgName
+        'imgName': imgRes ? imgRes.req.data : event.imgName,
+        'ownerId': event.ownerId
       }
         
+      
       EventsService.updateEvent(eventToUpload)    
-        
       navigate('/')
 
       
@@ -93,54 +115,89 @@ function EditEvent({ event }: EventProps){
     function deleteEvent() {
         EventsService.deleteEventById(event._id as string);
         navigate('/')
-    };
+    }
 
     return(
+            
+
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                  <Grid container marginTop={'70px'} marginLeft={'20px'} >
+        <Grid container marginTop={'70px'} marginLeft={'20px'} >
+          
+          <Grid container spacing={2} item xs={12} sm direction="column" >
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={11}>
+                <TextField
+                  name="artist"
+                  id="artist"
+                  label="Artist"
+                  defaultValue={event.artist}
+                  autoFocus
+                  fullWidth
+                />
+              </Grid>
 
-                    <Grid container spacing={2} item xs={12} sm direction="column" >
-                      <Grid container spacing={2}>
-                        <Grid item xs={12} sm={11}>
-                          <TextField
-                            name="artist"
-                            id="artist"
-                            label={event.artist}
-                            defaultValue={event.artist}
-                            autoFocus
-                            fullWidth
-                          />
-                        </Grid>
+              <Grid item xs={12} sm={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker name="date" label={event.date} defaultValue={event.date} format={event.date} />
+                </LocalizationProvider>
+              </Grid>
 
-                        <Grid item xs={12} sm={6}>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DatePicker name="date" label={event.date} defaultValue={event.date} format={event.date} />
-                          </LocalizationProvider>
-                        </Grid>
+              <Grid item xs={12} sm={5}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <TimePicker name="time" label={event.hour} defaultValue={event.hour} format={event.hour} ampm={false} />
+                </LocalizationProvider>
+              </Grid>
 
-                        <Grid item xs={12} sm={5}>
-                          <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <TimePicker name="time" label={event.hour} defaultValue={event.hour} format={event.hour} ampm={false} />
-                          </LocalizationProvider>
-                        </Grid>
+              <Grid item xs={12} sm={11}>
+                <TextField fullWidth id="location" label='Location' defaultValue={event.location} name="location" />
+              </Grid>
 
-                        <Grid item xs={12} sm={11}>
-                          <TextField fullWidth id="location" label={event.location} defaultValue={event.location} name="location" />
-                        </Grid>
+              <Grid item xs={12} sm={11}>
+                <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={options}
+                  renderInput={(params) => <TextField {...params} id="city" name="city" label={event.city} defaultValue={event.city} />}
+                />
+               </Grid>
+            </Grid>
+          </Grid>
 
-                        <Grid item xs={12} sm={11}>
-                          <Autocomplete
-                            disablePortal
-                            id="combo-box-demo"
-                            options={options}
-                            renderInput={(params) => <TextField {...params} id="city" name="city" label={event.city} defaultValue={event.city} />}
-                          />
-                         </Grid>
-                      </Grid>
-                    </Grid>
-                        
-                  </Grid>
-                        
+          <Grid item xs={12} sm={6}>
+            <Box textAlign="left">
+              
+              {selectedImage && (
+                <Box>
+                  <img src={selectedImage} alt="Selected" style={{ width: '200px', height: 'auto' }} />
+                </Box>
+              )}
+
+              <Box>
+                <input
+                  accept="image/*"
+                  style={{ display: 'none'}}
+                  id="image-upload"
+                  name='image-upload'
+                  type="file"
+                  onChange={handleImageChange}
+                />
+                <label htmlFor="image-upload">
+                  <Button
+                    variant="contained"
+                    component="span"
+                    startIcon={<CloudUploadIcon />}
+                    style={{ marginTop: '10px', backgroundColor: '#0D0125', fontFamily: 'cursive', height:'25px',fontSize:'10px', width: '200px' }}
+                  >
+                    Upload Image
+                  </Button>
+                </label>
+              </Box>
+
+            </Box>
+          </Grid>
+
+        </Grid>
+
                   <Grid marginTop={'50px'} textAlign={"left"}>
                     <Button
                         type="submit"
