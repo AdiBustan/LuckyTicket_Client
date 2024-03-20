@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { CredentialResponse, GoogleLogin} from '@react-oauth/google'
 import { googleSignin, IUser, logInUser } from '../../services/User-service';
 import { setAccessToken, setRefreshToken } from '../../services/token-service';
+import Logo from '../../../images/clover_icon.png';
 
 const SignInPage = ({onLoggin} : any) => { 
 
@@ -60,7 +61,7 @@ const SignInPage = ({onLoggin} : any) => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(/home/st111/LuckyTicket_Client/images/event.jpg)',
+            backgroundImage: 'url(/LuckyTicket_Client/images/event.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -75,7 +76,7 @@ const SignInPage = ({onLoggin} : any) => {
               alignItems: 'center',
             }}
           >
-          <img src='/home/st111/LuckyTicket_Client/images/clover_icon.png' width={'130px'} style={{display:'flex', margin:'auto'}}/>
+          <img src={Logo} width={'130px'} style={{display:'flex', margin:'auto'}}/>
             <Typography component="h1" variant="h3"  style={{fontFamily: 'cursive', color:'#0D0125'}} >
               LUCKY TICKET
             </Typography>
