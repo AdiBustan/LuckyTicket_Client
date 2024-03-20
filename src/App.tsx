@@ -13,7 +13,7 @@ import UploadEvent from './components/UploadEvent/UploadEvent';
 import ProfilePage from './components/profilePage/ProfilePage';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("user_id"));
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("user_id") != null);
   
   const handleFormSubmit = (data : any) => {
     console.log('Submitted data:', data);

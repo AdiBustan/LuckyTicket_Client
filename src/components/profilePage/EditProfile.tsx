@@ -7,6 +7,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useNavigate } from 'react-router';
 import { IUser, updateUser } from '../../services/User-service';
 import FileService from '../../services/File-service';
+import { useState } from 'react';
 
 
 interface UserProps {
@@ -15,7 +16,8 @@ interface UserProps {
 
 function EditEvent({ user }: UserProps){
     const [currFile, setFile] = React.useState();
-    const [selectedImage, setSelectedImage] = React.useState(user.imgName ? localStorage.getItem(user.imgName) : '/images/avatar.png');
+    const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>
+                                              (user.imgName ? localStorage.getItem(user.imgName) : '/images/avatar.png');
     const navigate = useNavigate();
   
     const handleSubmit = async (newEvent: React.FormEvent<HTMLFormElement>) => {
@@ -54,7 +56,7 @@ function EditEvent({ user }: UserProps){
       navigate('/')
     };
 
-    const handleImageChange = (event) => {
+    const handleImageChange = (event: any) => {
       const file = event.target.files[0];
       setFile(file);
       if (file) {
@@ -91,7 +93,7 @@ function EditEvent({ user }: UserProps){
                         </Grid>
 
                         <Box textAlign="center" marginTop={'5%'} marginLeft={'20px'}>
-                          <img src={selectedImage} alt="Selected" style={{width: '100px', height: '100px', borderRadius:'50%'}} />
+                          <img src={selectedImage as string} alt="Selected" style={{width: '100px', height: '100px', borderRadius:'50%'}} />
                           <Box>
                             <input
                               accept="image/*"

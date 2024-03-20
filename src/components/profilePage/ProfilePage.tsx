@@ -1,22 +1,18 @@
 import { Avatar, Grid, IconButton } from "@mui/material"
 import { useEffect, useState } from "react"
 import { IUser, getUserByEmail } from "../../services/User-service"
-import { useNavigate } from "react-router";
-import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { CanceledError } from "axios";
 import UserEventList from "./UserEventList";
 import FileService from "../../services/File-service";
 import EditProfile from "./EditProfile";
-import React from "react";
 
 
 function ProfilePage({onLogout} : any) {
     const [user, setUser] = useState<IUser>();
     // const [error, setError] = useState()
     const [isEditMode, setIsEditMode] = useState(false)
-    const navigate = useNavigate();
     
     useEffect(() => {
         const { req, abort } = getUserByEmail()
@@ -48,7 +44,7 @@ function ProfilePage({onLogout} : any) {
             <IconButton onClick={onLogout}>
                 <LogoutOutlinedIcon/>
             </IconButton>
-            {isEditMode ? <EditProfile user={user}/> :
+            {isEditMode ? <EditProfile user={user as IUser}/> :
             <Grid container item xs={10} marginTop={'40px'} marginLeft={'20px'}>
                 <Grid item xs={3} >
                     <Avatar

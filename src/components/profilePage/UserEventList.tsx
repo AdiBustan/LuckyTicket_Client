@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import Event from '../../components/event/Event'
-import CircularProgress from '@mui/material/CircularProgress';
 import { Link } from 'react-router-dom'
 import EventService, { IEvent } from '../../services/Events-service';
 import FileService, { CanceledError } from '../../services/File-service';

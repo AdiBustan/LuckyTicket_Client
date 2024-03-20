@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 
 function EventList() {
     const [events, setEvents] = useState<IEvent[]>([])
-    const [error, setError] = useState()
     
     useEffect(() => {
         const { req, abort } = EventService.getAllEvents()
@@ -14,7 +13,6 @@ function EventList() {
         }).catch((err) => {
             console.log(err)
             if (err instanceof CanceledError) return
-            setError(err.message)
         })
         return () => {
             abort()

@@ -14,6 +14,7 @@ import AlertDialog from '../../services/AlertDialog';
 import { useNavigate } from 'react-router';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import FileService from '../../services/File-service';
+import { useState } from 'react';
 
 
 interface EventProps {
@@ -23,7 +24,7 @@ interface EventProps {
 function EditEvent({ event }: EventProps){
     const [currFile, setFile] = React.useState();
     const [options, setOptions] = React.useState([{ label: "Tel Aviv, Israel" }]);
-    const [selectedImage, setSelectedImage] = React.useState(localStorage.getItem(event.imgName));
+    const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>(localStorage.getItem(event.imgName));
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);  
     const handleClose = () => { setOpen(false) };
@@ -54,7 +55,7 @@ function EditEvent({ event }: EventProps){
   
     fetchLocations();
   
-    const handleImageChange = (event) => {
+    const handleImageChange = (event: any) => {
       const file = event.target.files[0];
       setFile(file);
       if (file) {
@@ -168,7 +169,7 @@ function EditEvent({ event }: EventProps){
               
               {selectedImage && (
                 <Box>
-                  <img src={selectedImage} alt="Selected" style={{ width: '200px', height: 'auto' }} />
+                  <img src={selectedImage as string} alt="Selected" style={{ width: '200px', height: 'auto' }} />
                 </Box>
               )}
 
