@@ -17,7 +17,7 @@ interface UserProps {
 function EditEvent({ user }: UserProps){
     const [currFile, setFile] = React.useState();
     const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>
-                                              (user.imgName ? localStorage.getItem(user.imgName) : '/images/avatar.png');
+                                              (user.imgName ? localStorage.getItem(user.imgName) : '/home/st111/LuckyTicket_Client/images/avatar.png');
     const navigate = useNavigate();
   
     const handleSubmit = async (newEvent: React.FormEvent<HTMLFormElement>) => {

@@ -21,7 +21,7 @@ export default function NavBar() {
 
   const drawer = (
     <div>
-      <img src='/images/w_clover_icon.png' width={'80px'} style={{display:'flex', margin:'auto', marginTop:'30px'}}/>
+      <img src='/home/st111/LuckyTicket_Client/images/w_clover_icon.png' width={'80px'} style={{display:'flex', margin:'auto', marginTop:'30px'}}/>
       <h3  style={{color: '#FFFFFF', fontFamily: 'cursive', display:'flex', justifyContent:'center', marginTop:'10px'}}>
           LUCKY TICKET
       </h3>

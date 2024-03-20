@@ -14,7 +14,7 @@ import {useNavigate } from 'react-router-dom';
 
 const RegistrationPage = ({onLoggin} : any) => {
   const [currFile, setFile] = useState();
-  const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>("/images/profile_avatar.jpg");
+  const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>("/home/st111/LuckyTicket_Client/images/profile_avatar.jpg");
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const RegistrationPage = ({onLoggin} : any) => {
     }
 
     if (!user.username || !user.email || !user.password ||
-        !user.phone || selectedImage == "/images/profile_avatar.jpg") {
+        !user.phone || selectedImage == "/home/st111/LuckyTicket_Client/images/profile_avatar.jpg") {
       handleOpenDialog();
     } else {
       const imgRes = await FileService.uploadImage(imageData);
@@ -81,7 +81,7 @@ const RegistrationPage = ({onLoggin} : any) => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(/images/event.jpg)',
+            backgroundImage: 'url(/home/st111/LuckyTicket_Client/images/event.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -117,7 +117,7 @@ const RegistrationPage = ({onLoggin} : any) => {
 
             </Box>
 
-            {/* <Avatar sx={{ width: 100, height: 100 }} alt="Remy Sharp" src="/images/profile_avatar.jpg" /> */}
+            {/* <Avatar sx={{ width: 100, height: 100 }} alt="Remy Sharp" src="/home/st111/LuckyTicket_Client/images/profile_avatar.jpg" /> */}
             <Box component="form" width={'450px'} noValidate onSubmit={handleRegisterSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
