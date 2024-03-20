@@ -10,6 +10,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
+import Logo from '../../../images/clover_icon.png';
 import { useNavigate } from "react-router";
 
 
@@ -21,7 +22,7 @@ export default function NavBar() {
 
   const drawer = (
     <div>
-      <img src='/LuckyTicket_Client/images/w_clover_icon.png' width={'80px'} style={{display:'flex', margin:'auto', marginTop:'30px'}}/>
+      <img src={Logo} width={'80px'} style={{display:'flex', margin:'auto', marginTop:'30px'}}/>
       <h3  style={{color: '#FFFFFF', fontFamily: 'cursive', display:'flex', justifyContent:'center', marginTop:'10px'}}>
           LUCKY TICKET
       </h3>
