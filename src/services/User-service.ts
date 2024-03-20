@@ -55,3 +55,10 @@ export const getUserByEmail = () => {
     const req = apiClient.get<IUser>('user', { signal: abortController.signal })
     return { req, abort: () => abortController.abort() }
 }
+
+export const updateUser = (user : IUser) => {
+    console.log("user===========" + user.username)
+    const abortController = new AbortController()
+    const req = apiClient.put('user/' + user._id, user, { signal: abortController.signal })
+    return { req, abort: () => abortController.abort() }
+}

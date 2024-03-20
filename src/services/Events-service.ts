@@ -1,7 +1,5 @@
 import apiClient, { CanceledError } from "./Api-client"
 
-import { getRefreshToken, refreshAccessToken, setAccessToken } from "./token-service"
-
 export interface IEvent {
     date: string;
     hour: string;
@@ -22,7 +20,7 @@ const getAllEvents = () => {
     return { req, abort: () => abortController.abort() }
 }
 
-const getAllUserEvents = () => {
+export const getAllUserEvents = () => {
     const abortController = new AbortController()
     const req = apiClient.get<IEvent[]>('event/myEvents', { signal: abortController.signal })
     return { req, abort: () => abortController.abort() }

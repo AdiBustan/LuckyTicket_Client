@@ -10,12 +10,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { IEvent, uploadEvent } from '../services/Events-service';
 import {useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Autocomplete } from '@mui/material';
-import AlertDialog from './AlertDialog';
-import  FileService  from '../services/File-service';
+import FileService from '../../services/File-service';
+import { IEvent, uploadEvent } from '../../services/Events-service';
+import AlertDialog from '../../services/AlertDialog';
 
 
 
@@ -93,7 +93,7 @@ function UploadEvent() {
       'city': data.get('city') as string,
       'artist': data.get('artist') as string,
       'comments': [] as string[],
-      'imgName': imgRes.req.data
+      'imgName': imgRes.req.data,
     }
 
 
