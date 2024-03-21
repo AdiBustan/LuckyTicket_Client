@@ -11,6 +11,9 @@ import { setAccessToken, setRefreshToken } from '../../services/token-service';
 import AlertDialog from '../../services/AlertDialog';
 import FileService from '../../services/File-service';
 import {useNavigate } from 'react-router-dom';
+import EventPic from '../../../images/Event.jpg';
+import AvatarPic from '../../../images/profile_avatar.jpg';
+
 
 const RegistrationPage = ({onLoggin} : any) => {
   const [currFile, setFile] = useState();
@@ -38,7 +41,7 @@ const RegistrationPage = ({onLoggin} : any) => {
     }
 
     if (!user.username || !user.email || !user.password ||
-        !user.phone || selectedImage == "/home/st111/LuckyTicket_Client/images/profile_avatar.jpg") {
+        !user.phone || selectedImage == AvatarPic) {
       handleOpenDialog();
     } else {
       const imgRes = await FileService.uploadImage(imageData);
@@ -81,7 +84,7 @@ const RegistrationPage = ({onLoggin} : any) => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(/home/st111/LuckyTicket_Client/images/event.jpg)',
+            backgroundImage: 'url('+EventPic+')',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
