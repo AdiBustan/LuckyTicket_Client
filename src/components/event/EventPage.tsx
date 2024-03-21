@@ -39,8 +39,8 @@ function EventPage() {
         req.then((res) => {
             setEvent(res.data)
             console.log("owner:" + res.data.ownerId + " user: " + userId);
-            if (event?.imgName && localStorage.getItem(event.imgName)) {
-                const img = localStorage.getItem(event.imgName);
+            if (res.data?.imgName && localStorage.getItem(res.data.imgName)) {
+                const img = localStorage.getItem(res.data.imgName);
                 setImage(img);
             }
             if (userId == res.data.ownerId) {
