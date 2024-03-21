@@ -10,7 +10,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
-import Logo from '../../../images/clover_icon.png';
+import Logo from '../../../images/w_clover_icon.png';
 import { useNavigate } from "react-router";
 
 

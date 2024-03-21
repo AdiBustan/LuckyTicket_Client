@@ -9,6 +9,7 @@ import { CredentialResponse, GoogleLogin} from '@react-oauth/google'
 import { googleSignin, IUser, logInUser } from '../../services/User-service';
 import { setAccessToken, setRefreshToken } from '../../services/token-service';
 import Logo from '../../../images/clover_icon.png';
+import EventPic from '../../../images/Event.jpg';
 
 const SignInPage = ({onLoggin} : any) => { 
 
@@ -61,7 +62,7 @@ const SignInPage = ({onLoggin} : any) => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(/LuckyTicket_Client/images/event.jpg)',
+            backgroundImage: 'url('+EventPic+')',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
