@@ -41,7 +41,7 @@ const RegistrationPage = ({onLoggin} : any) => {
     }
 
     if (!user.username || !user.email || !user.password ||
-        !user.phone || selectedImage == AvatarPic) {
+        !user.phone || selectedImage == AvatarPic as string) {
       handleOpenDialog();
     } else {
       const imgRes = await FileService.uploadImage(imageData);
