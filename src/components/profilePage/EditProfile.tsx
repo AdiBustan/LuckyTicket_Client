@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router';
 import { IUser, updateUser } from '../../services/User-service';
 import FileService from '../../services/File-service';
 import { useState } from 'react';
-import AvatarPic from '../../../images/avatar.png';
+import AvatarPic from '../../../images/profile_avatar.jpg';
 
 
 interface UserProps {
