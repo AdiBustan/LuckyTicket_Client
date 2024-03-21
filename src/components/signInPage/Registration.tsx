@@ -17,7 +17,7 @@ import AvatarPic from '../../../images/profile_avatar.jpg';
 
 const RegistrationPage = ({onLoggin} : any) => {
   const [currFile, setFile] = useState();
-  const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>("/home/st111/LuckyTicket_Client/images/profile_avatar.jpg");
+  const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>(AvatarPic);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
