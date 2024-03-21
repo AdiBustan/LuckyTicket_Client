@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { IUser, updateUser } from '../../services/User-service';
 import FileService from '../../services/File-service';
 import { useState } from 'react';
+import AvatarPic from '../../../images/avatar.png';
 
 
 interface UserProps {
@@ -17,7 +18,7 @@ interface UserProps {
 function EditEvent({ user }: UserProps){
     const [currFile, setFile] = React.useState();
     const [selectedImage, setSelectedImage] = useState<string | ArrayBuffer | null>
-                                              (user.imgName ? localStorage.getItem(user.imgName) : '/home/st111/LuckyTicket_Client/images/avatar.png');
+                                              (user.imgName ? localStorage.getItem(user.imgName) : AvatarPic);
     const navigate = useNavigate();
   
     const handleSubmit = async (newEvent: React.FormEvent<HTMLFormElement>) => {
